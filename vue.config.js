@@ -106,6 +106,13 @@ module.exports = {
         ws: true,
         pathRewrite: {
           '^/act': '/act'
+        },
+        '/base': {
+          target: url,
+          ws: true,
+          pathRewrite: {
+            '^/base': '/base'
+          }
         }
       }
     }
