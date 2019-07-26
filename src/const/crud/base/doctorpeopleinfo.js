@@ -23,13 +23,30 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   column: [
-	  {
-      label: '主键',
-      prop: 'id'
+    {
+      fixed: true,
+      label: '编号',
+      prop: 'peopleId',
+      span: 24,
+      hide: true,
+      editDisabled: true,
+      addDisplay: false
     },
 	  {
       label: '医保卡号',
       prop: 'cardNumber'
+    },
+	  {
+      label: '医保卡照片',
+      prop: 'cardNumberImg'
+    },
+	  {
+      label: '慢性病 有无字段 0：无；1：有',
+      prop: 'hasChronicDisease'
+    },
+	  {
+      label: '慢性病内容',
+      prop: 'chronicDisease'
     },
 	  {
       label: '身份证',
@@ -95,21 +112,16 @@ export const tableOption = {
       label: '关联用户编号',
       prop: 'userId'
     },
-	  {
+    {
+      width: 180,
       label: '创建时间',
-      prop: 'createTime'
-    },
-	  {
-      label: '修改时间',
-      prop: 'updateTime'
-    },
-	  {
-      label: '是否删除  -1：已删除  0：正常',
-      prop: 'delFlag'
-    },
-	  {
-      label: '',
-      prop: 'tenantId'
-    },
+      prop: 'createTime',
+      type: 'datetime',
+      format: 'yyyy-MM-dd HH:mm',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      editDisabled: true,
+      addDisplay: false,
+      span: 24
+    }
   ]
 }
