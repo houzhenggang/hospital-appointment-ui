@@ -1,6 +1,7 @@
 import { validatenull } from './validate'
 import request from '@/router/axios'
 import * as CryptoJS from 'crypto-js'
+import { getStore } from "./store"
 
 // 表单序列化
 export const serialize = data => {
@@ -361,5 +362,19 @@ export function getQueryString(url, paraName) {
     return ''
   } else {
     return ''
+  }
+}
+
+/**
+ * @description 根据字典名称获取字典数据
+ * @param {字典名称} name
+ */
+export const getDict = (name) => {
+  let dicData = getStore({name: "dictList"})
+  if (dicData[name]) {
+    return dicData[name]
+  } else {
+    console.error(`字典${name}不存在！`)
+    return []
   }
 }

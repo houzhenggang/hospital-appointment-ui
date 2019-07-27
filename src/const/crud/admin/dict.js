@@ -36,6 +36,7 @@ export const tableOption = {
   }, {
     label: '描述',
     prop: 'description',
+    search: true,
     rules: [{
       required: true,
       message: '请输入字典描述',

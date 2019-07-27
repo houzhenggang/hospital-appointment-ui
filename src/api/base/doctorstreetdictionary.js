@@ -19,53 +19,15 @@ import request from '@/router/axios'
 
 export function fetchList(query) {
   return request({
-    url: '/admin/dict/page',
+    url: '/base/doctorstreetdictionary/page',
     method: 'get',
     params: query
-  })
-}
-
-export function fetchItemList(query) {
-  return request({
-    url: '/admin/dict/item/page',
-    method: 'get',
-    params: query
-  })
-}
-
-export function addItemObj(obj) {
-  return request({
-    url: '/admin/dict/item',
-    method: 'post',
-    data: obj
-  })
-}
-
-export function getItemObj(id) {
-  return request({
-    url: '/admin/dict/item/' + id,
-    method: 'get'
-  })
-}
-
-export function delItemObj(id) {
-  return request({
-    url: '/admin/dict/item/' + id,
-    method: 'delete'
-  })
-}
-
-export function putItemObj(obj) {
-  return request({
-    url: '/admin/dict/item',
-    method: 'put',
-    data: obj
   })
 }
 
 export function addObj(obj) {
   return request({
-    url: '/admin/dict/',
+    url: '/base/doctorstreetdictionary',
     method: 'post',
     data: obj
   })
@@ -73,33 +35,22 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/dict/' + id,
+    url: '/base/doctorstreetdictionary/' + id,
     method: 'get'
   })
 }
 
-export function delObj(row) {
+export function delObj(id) {
   return request({
-    url: '/admin/dict/' + row.id,
+    url: '/base/doctorstreetdictionary/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(obj) {
   return request({
-    url: '/admin/dict/',
+    url: '/base/doctorstreetdictionary',
     method: 'put',
     data: obj
   })
-}
-
-export function remote(type) {
-  return request({
-    url: '/admin/dict/type/' + type,
-    method: 'get'
-  })
-}
-
-export function getDictAll () {
-  return request.get(`/admin/dict/type-all`)
 }

@@ -4,6 +4,8 @@ import { getUserInfo, loginByMobile, loginBySocial, loginByUsername, logout, ref
 import { deepClone, encryption } from '@/util/util'
 import webiste from '@/const/website'
 import { GetMenu } from '@/api/admin/menu'
+import { getDictAll as getAdminDictAll } from "@/api/admin/dict"
+
 
 function addPath(ele, first) {
   const menu = webiste.menu
@@ -44,7 +46,10 @@ const user = {
     }) || '',
     refresh_token: getStore({
       name: 'refresh_token'
-    }) || ''
+    }) || '',
+    dictList: getStore({
+      name: "dictList",
+    }) || {}
   },
   actions: {
     // 根据用户名登录
@@ -173,6 +178,11 @@ const user = {
           resolve(menu)
         })
       })
+    },
+    GetDictAll ({ commit }) {
+      return getAdminDictAll().then(({ data }) => {
+        commit("SET_DICT_ALL", data.data)
+      })
     }
 
   },
@@ -224,7 +234,15 @@ const user = {
         list[permissions[i]] = true
       }
       state.permissions = list
-    }
+    },
+    SET_DICT_ALL: (state, dictList) => {
+      state.dictList = dictList
+      setStore({
+        name: "dictList",
+        content: state.dictList,
+        type: "session",
+      })
+    },
   }
 
 }

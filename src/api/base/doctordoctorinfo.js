@@ -19,53 +19,15 @@ import request from '@/router/axios'
 
 export function fetchList(query) {
   return request({
-    url: '/admin/dict/page',
+    url: '/base/doctordoctorinfo/page',
     method: 'get',
     params: query
-  })
-}
-
-export function fetchItemList(query) {
-  return request({
-    url: '/admin/dict/item/page',
-    method: 'get',
-    params: query
-  })
-}
-
-export function addItemObj(obj) {
-  return request({
-    url: '/admin/dict/item',
-    method: 'post',
-    data: obj
-  })
-}
-
-export function getItemObj(id) {
-  return request({
-    url: '/admin/dict/item/' + id,
-    method: 'get'
-  })
-}
-
-export function delItemObj(id) {
-  return request({
-    url: '/admin/dict/item/' + id,
-    method: 'delete'
-  })
-}
-
-export function putItemObj(obj) {
-  return request({
-    url: '/admin/dict/item',
-    method: 'put',
-    data: obj
   })
 }
 
 export function addObj(obj) {
   return request({
-    url: '/admin/dict/',
+    url: '/base/doctordoctorinfo',
     method: 'post',
     data: obj
   })
@@ -73,33 +35,26 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/dict/' + id,
+    url: '/base/doctordoctorinfo/' + id,
     method: 'get'
   })
 }
 
-export function delObj(row) {
+export function delObj(id) {
   return request({
-    url: '/admin/dict/' + row.id,
+    url: '/base/doctordoctorinfo/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(obj) {
   return request({
-    url: '/admin/dict/',
+    url: '/base/doctordoctorinfo',
     method: 'put',
     data: obj
   })
 }
-
-export function remote(type) {
-  return request({
-    url: '/admin/dict/type/' + type,
-    method: 'get'
-  })
-}
-
-export function getDictAll () {
-  return request.get(`/admin/dict/type-all`)
+const baseUrl = "/base/doctordoctorinfo"
+export function doctordoctorinfoDictByHospitalId (hospitalId = "{{key}}") {
+  return request.get(`${baseUrl}/dict/${hospitalId}`)
 }

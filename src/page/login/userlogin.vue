@@ -116,7 +116,8 @@ export default {
           { min: 4, max: 4, message: '验证码长度为4位', trigger: 'blur' }
         ]
       },
-      passwordType: 'password'
+      passwordType: 'password',
+      loading: false
     }
   },
   created() {
@@ -142,11 +143,14 @@ export default {
         : (this.passwordType = '')
     },
     handleLogin() {
+      this.loading = true
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
-            this.$router.push({ path: this.tagWel.value })
-          }).catch(() => {
+            this.$store.dispatch("GetDictAll").then(() => {
+              this.$router.push({path: this.tagWel.value});
+              this.loading = false
+            })          }).catch(() => {
             this.refreshCode()
           })
         }
