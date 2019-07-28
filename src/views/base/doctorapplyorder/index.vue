@@ -42,9 +42,9 @@
             ...mapGetters(['permissions']),
             permissionList() {
                 return {
-                    addBtn: this.vaildData(this.permissions.generator_doctorapplyorder_add, false),
-                    delBtn: this.vaildData(this.permissions.generator_doctorapplyorder_del, false),
-                    editBtn: this.vaildData(this.permissions.generator_doctorapplyorder_edit, false)
+                    addBtn: this.vaildData(this.permissions.base_doctorapplyorder_add, false),
+                    delBtn: this.vaildData(this.permissions.base_doctorapplyorder_del, false),
+                    editBtn: this.vaildData(this.permissions.base_doctorapplyorder_edit, false)
                 };
             }
         },
