@@ -5,18 +5,33 @@ export const tableOption = {
   stripe: true,
   menuAlign: 'center',
   align: 'center',
+  labelWidth: "130",
   column: [
     {
       fixed: true,
       label: '编号',
       prop: 'applyOrderId',
-      span: 24,
       hide: true,
       editDisabled: true,
       addDisplay: false
     },
+    {
+      label: '姓名',
+      prop: 'userName'
+    },
+    {
+      label: '身份证号',
+      prop: 'userIdcard'
+    },
+    {
+      label: '手机号',
+      prop: 'userPhone'
+    },
 	  {
       label: '机构ID',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
       prop: 'hospitalId'
     },
 	  {
@@ -33,31 +48,28 @@ export const tableOption = {
     },
 	  {
       label: '预约人ID',
-      prop: 'userId'
-    },
-	  {
-      label: '预约人姓名',
-      prop: 'userName'
-    },
-	  {
-      label: '预约人身份证号',
-      prop: 'userIdcard'
-    },
-	  {
-      label: '预约人手机号',
-      prop: 'userPhone'
+      prop: 'userId',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
     },
 	  {
       label: '检查项目ID',
-      prop: 'insptItemId'
+      prop: 'insptItemId',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
     },
 	  {
-      label: '预约检查项目名称',
+      label: '检查项目',
       prop: 'insptItemName'
     },
 	  {
       label: '检查资源ID',
-      prop: 'insptResourceId'
+      prop: 'insptResourceId',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
     },
 	  {
       label: '检查费用',
@@ -76,7 +88,7 @@ export const tableOption = {
       prop: 'detailTime'
     },
 	  {
-      label: '备注或说明',
+      label: '备注',
       prop: 'remark'
     },
 	  {
