@@ -5,6 +5,7 @@ export const tableOption = {
   stripe: true,
   menuAlign: 'center',
   align: 'center',
+  labelWidth: "130",
   column: [
     {
       fixed: true,
@@ -16,16 +17,20 @@ export const tableOption = {
       addDisplay: false
     },
 	  {
-      label: '检查类别（体格检查，功能检查，化验检查）',
-      prop: 'inspItemType'
+      label: '检查类别',
+      prop: 'inspItemType',
+      type: "select",
+      dicUrl: '/admin/dict/type/kasoft_inspection_type',
     },
 	  {
-      label: '检查项目名称',
+      label: '检查项目',
       prop: 'inspItemName'
     },
 	  {
-      label: '检查项目说明（比如检查前3小时不能进食）',
-      prop: 'inspItemExp'
+      label: '检查项说明',
+      prop: 'inspItemExp',
+      type: 'textarea',
+      span: 24,
     },
     {
       width: 180,
