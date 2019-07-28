@@ -9,7 +9,7 @@
                        :option="tableOption"
                        :upload-after="uploadAfter"
                        @on-load="getList"
-                       @search-change="handleFilter"
+                       @search-change="searchChange"
                        @refresh-change="refreshChange"
                        @row-update="handleUpdate"
                        @row-save="handleSave"
@@ -68,10 +68,12 @@ export default {
       fetchList(Object.assign({
         current: page.currentPage,
         size: page.pageSize
-      }, params)).then(response => {
+      }, params, this.searchForm )).then(response => {
         this.tableData = response.data.data.records
         this.page.total = response.data.data.total
         this.tableLoading = false
+      }).catch(() => {
+        this.tableLoading=false
       })
     },
     rowDel: function (row, index) {
@@ -119,16 +121,16 @@ export default {
              *
              **/
     handleSave: function (row, done) {
-      addObj(row).then(data => {
-        this.tableData.push(Object.assign({}, row))
-        this.$message({
-          showClose: true,
-          message: '添加成功',
-          type: 'success'
+        addObj(row).then(data => {
+          this.tableData.push(Object.assign({}, row))
+          this.$message({
+            showClose: true,
+            message: '添加成功',
+            type: 'success'
+          })
+          done()
+          this.getList(this.page)
         })
-        done()
-        this.getList(this.page)
-      })
     },
     /**
              * 刷新回调

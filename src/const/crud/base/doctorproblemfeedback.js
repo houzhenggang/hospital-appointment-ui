@@ -1,19 +1,4 @@
-/*
- *    Copyright (c) 2018-2025, lengleng All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- * Neither the name of the pig4cloud.com developer nor the names of its
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- * Author: lengleng (wangiegie@gmail.com)
- */
+import { getDict } from "@/util/util"
 
 export const tableOption = {
   border: true,
@@ -47,7 +32,7 @@ export const tableOption = {
         message: '请选择反馈类别',
         trigger: 'blur'
       }],
-      dicUrl: '/base/dictionariesutils/type/FeedbackType'
+      dicData: getDict('feedback_type')
     },
     {
       label: '反馈内容',
@@ -67,14 +52,6 @@ export const tableOption = {
     {
       label: '软件名称',
       prop: 'softName',
-      type: 'select',
-      dicUrl: '/admin/dict/type/SOFTNAME',
-      search: true,
-      rules: [{
-        required: true,
-        message: '请选择软件名称',
-        trigger: 'blur'
-      }]
     },
 	  {
       label: '反馈时间',
@@ -135,7 +112,7 @@ export const tableOption = {
         message: '请选择处理状态',
         trigger: 'blur'
       }],
-      dicUrl: '/base/dictionariesutils/type/HandleState'
+      dicData: getDict('handle_state')
     },
     {
       width: 180,
