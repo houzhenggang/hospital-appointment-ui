@@ -38,6 +38,7 @@ export default {
   name: 'doctordepartmentdictionary',
   data() {
     return {
+      searchForm: {},
       tableData: [],
       page: {
         total: 0, // 总页数
@@ -78,12 +79,12 @@ export default {
     },
     rowDel: function (row, index) {
       var _this = this
-      this.$confirm('是否确认删除ID为' + row.id, '提示', {
+      this.$confirm('是否确认删除ID为' + row.departmentId, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        return delObj(row.id)
+        return delObj(row.departmentId)
       }).then(data => {
         _this.tableData.splice(index, 1)
         _this.$message({
@@ -92,19 +93,10 @@ export default {
           type: 'success'
         })
         this.getList(this.page)
-      }).catch(function (err) {
       })
     },
-    /**
-             * @title 数据更新
-             * @param row 为当前的数据
-             * @param index 为当前更新数据的行数
-             * @param done 为表单关闭函数
-             *
-             **/
-    handleUpdate: function (row, index, done) {
+    handleUpdate: function (row, index, done,loading) {
       putObj(row).then(data => {
-        this.tableData.splice(index, 1, Object.assign({}, row))
         this.$message({
           showClose: true,
           message: '修改成功',
@@ -112,40 +104,29 @@ export default {
         })
         done()
         this.getList(this.page)
-      })
+      }).catch(() => {
+        loading();
+      });
     },
-    /**
-             * @title 数据添加
-             * @param row 为当前的数据
-             * @param done 为表单关闭函数
-             *
-             **/
-    handleSave: function (row, done) {
-        addObj(row).then(data => {
-          this.tableData.push(Object.assign({}, row))
-          this.$message({
-            showClose: true,
-            message: '添加成功',
-            type: 'success'
-          })
-          done()
-          this.getList(this.page)
+    handleSave: function (row, done,loading) {
+      addObj(row).then(data => {
+        this.$message({
+          showClose: true,
+          message: '添加成功',
+          type: 'success'
         })
+        done()
+        this.getList(this.page)
+      }).catch(() => {
+        loading();
+      });
     },
-    /**
-             * 刷新回调
-             */
+    searchChange(form) {
+      this.searchForm = form
+      this.getList(this.page, form)
+    },
     refreshChange() {
       this.getList(this.page)
-    },
-    handleFilter(param) {
-      this.page.page = 1;
-      this.getList(this.page, this.filterForm(param));
-    },
-    uploadAfter(res, done, loading) {
-      console.log(res)
-      done()
-      this.$message.success('上传后的方法')
     }
   }
 }

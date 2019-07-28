@@ -9,7 +9,7 @@
       :option="tableOption"
       v-model="formData"
       @on-load="getList"
-      @search-change="handleFilter"
+      @search-change="searchChange"
       @refresh-change="refreshChange"
       @row-update="handleUpdate"
       @row-save="handleSave"
@@ -56,6 +56,7 @@ export default {
   },
   data() {
     return {
+      searchForm: {},
       tableData: [],
       page: {
         total: 0, // 总页数
@@ -92,75 +93,68 @@ export default {
   },
   methods: {
     getList(page, params) {
-      this.tableLoading = true;
-      fetchList(
-        Object.assign(
-          {
-            current: page.currentPage,
-            size: page.pageSize
-          },
-          params
-        )
-      ).then(response => {
-        this.tableData = response.data.data.records;
-        this.page.total = response.data.data.total;
-        this.tableLoading = false;
-      });
-    },
-    rowDel: function(row, index) {
-      var _this = this;
-      this.$confirm("是否确认删除ID为" + row.id, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.tableLoading = true
+      fetchList(Object.assign({
+        current: page.currentPage,
+        size: page.pageSize
+      }, params, this.searchForm )).then(response => {
+        this.tableData = response.data.data.records
+        this.page.total = response.data.data.total
+        this.tableLoading = false
+      }).catch(() => {
+        this.tableLoading=false
       })
-        .then(function() {
-          return delObj(row.id);
-        })
-        .then(data => {
-          _this.tableData.splice(index, 1);
-          _this.$message({
-            showClose: true,
-            message: "删除成功",
-            type: "success"
-          });
-          this.getList(this.page);
-        })
-        .catch(function(err) {});
     },
-    handleUpdate: function(row, index, done) {
+    rowDel: function (row, index) {
+      var _this = this
+      this.$confirm('是否确认删除ID为' + row.doctorId, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return delObj(row.doctorId)
+      }).then(data => {
+        _this.tableData.splice(index, 1)
+        _this.$message({
+          showClose: true,
+          message: '删除成功',
+          type: 'success'
+        })
+        this.getList(this.page)
+      })
+    },
+    handleUpdate: function (row, index, done,loading) {
       putObj(row).then(data => {
-        this.tableData.splice(index, 1, Object.assign({}, row));
         this.$message({
           showClose: true,
-          message: "修改成功",
-          type: "success"
-        });
-        done();
-        this.getList(this.page);
+          message: '修改成功',
+          type: 'success'
+        })
+        done()
+        this.getList(this.page)
+      }).catch(() => {
+        loading();
       });
     },
-    handleSave: function(row, done) {
+    handleSave: function (row, done,loading) {
       addObj(row).then(data => {
-        this.tableData.push(Object.assign({}, row));
         this.$message({
           showClose: true,
-          message: "添加成功",
-          type: "success"
-        });
-        done();
-        this.getList(this.page);
+          message: '添加成功',
+          type: 'success'
+        })
+        done()
+        this.getList(this.page)
+      }).catch(() => {
+        loading();
       });
     },
-    /**
-     * 刷新回调
-     */
-    refreshChange() {
-      this.getList(this.page);
+    searchChange(form) {
+      this.searchForm = form
+      this.getList(this.page, form)
     },
-    handleFilter(param) {
-      this.page.page = 1;
-      this.getList(this.page, this.filterForm(param));
+    refreshChange() {
+      this.getList(this.page)
     },
     handleBindUser (userInfo) {
       if (userInfo.userId) {
@@ -181,7 +175,7 @@ export default {
       })
     },
     handleUserUpdate (formData) {
-      
+
     },
   }
 };
