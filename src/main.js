@@ -8,9 +8,14 @@ import './permission' // 权限
 import './error' // 日志
 import router from './router/router'
 import store from './store'
-import { loadStyle } from './util/util'
+import {
+  loadStyle
+} from './util/util'
 import * as urls from '@/config/env'
-import { iconfontUrl, iconfontVersion } from '@/config/env'
+import {
+  iconfontUrl,
+  iconfontVersion
+} from '@/config/env'
 import * as filters from './filters' // 全局filter
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -19,13 +24,16 @@ import basicContainer from './components/basic-container/main'
 // 插件 json 展示
 import vueJsonTreeView from 'vue-json-tree-view'
 
+// 全局注册通用组件
+import '@/config/components'
+
 Vue.use(router)
 
 Vue.use(vueJsonTreeView)
 
 Vue.use(VueAxios, axios)
 
-Vue.use(ElementUI,{
+Vue.use(ElementUI, {
   size: 'medium',
   menuType: 'text'
 })
