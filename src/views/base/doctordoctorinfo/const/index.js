@@ -21,10 +21,6 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   menuType: "text",
-  props: {
-    label: 'label',
-    value: 'value'
-  },
   labelWidth: 150,
   column: [
     {
@@ -178,7 +174,7 @@ export const tableOption = {
       cascaderItem: ['departmentId'],
       props: {
         label: 'name',
-        value: 'id'
+        value: 'hospitalId'
       },
       rules: [{
         required: true,
@@ -195,7 +191,7 @@ export const tableOption = {
       solt: true,
       props: {
         label: 'name',
-        value: 'id'
+        value: 'departmentId'
       }
     },
     {
