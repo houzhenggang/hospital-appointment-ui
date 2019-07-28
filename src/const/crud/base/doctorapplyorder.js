@@ -16,16 +16,53 @@ export const tableOption = {
       addDisplay: false
     },
     {
-      label: '姓名',
-      prop: 'userName'
+      label: '机构名称',
+      prop: 'hospitalName',
     },
     {
-      label: '身份证号',
-      prop: 'userIdcard'
+      label: '机构电话',
+      prop: 'hospitalPhone'
+    },
+    {
+      label: '机构地址',
+      prop: 'hospitalAddr',
+      span: 24,
+      row:true,
+    },
+    {
+      label: '检查项目ID',
+      prop: 'insptItemId',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
+    },
+    {
+      label: '检查项目',
+      prop: 'insptItemName'
+    },
+    {
+      label: '检查费用',
+      prop: 'feeTotal'
+    },
+    {
+      label: '检查资源ID',
+      prop: 'insptResourceId',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
+    },
+    {
+      label: '预约人',
+      prop: 'userName',
     },
     {
       label: '手机号',
       prop: 'userPhone'
+    },
+    {
+      label: '身份证号',
+      prop: 'userIdcard',
+      row:true,
     },
 	  {
       label: '机构ID',
@@ -35,18 +72,6 @@ export const tableOption = {
       prop: 'hospitalId'
     },
 	  {
-      label: '机构名称',
-      prop: 'hospitalName'
-    },
-	  {
-      label: '机构电话',
-      prop: 'hospitalPhone'
-    },
-	  {
-      label: '机构地址',
-      prop: 'hospitalAddr'
-    },
-	  {
       label: '预约人ID',
       prop: 'userId',
       editDisabled: true,
@@ -54,30 +79,11 @@ export const tableOption = {
       hide:true,
     },
 	  {
-      label: '检查项目ID',
-      prop: 'insptItemId',
-      editDisabled: true,
-      addDisplay: false,
-      hide:true,
-    },
-	  {
-      label: '检查项目',
-      prop: 'insptItemName'
-    },
-	  {
-      label: '检查资源ID',
-      prop: 'insptResourceId',
-      editDisabled: true,
-      addDisplay: false,
-      hide:true,
-    },
-	  {
-      label: '检查费用',
-      prop: 'feeTotal'
-    },
-	  {
       label: '数量',
-      prop: 'quantity'
+      prop: 'quantity',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
     },
 	  {
       label: '预约时间',
@@ -95,11 +101,17 @@ export const tableOption = {
     },
 	  {
       label: '备注',
-      prop: 'remark'
+      prop: 'remark',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
     },
 	  {
       label: '订单状态',
-      prop: 'orderState'
+      prop: 'orderState',
+      editDisabled: true,
+      addDisplay: false,
+      hide:true,
     },
     {
       width: 180,
