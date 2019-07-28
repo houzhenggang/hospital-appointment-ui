@@ -2,7 +2,7 @@ import request from '@/router/axios'
 
 export function fetchList(query) {
   return request({
-    url: '/generator/doctorinspectresource/page',
+    url: '/base/doctorinspectresource/page',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function addObj(obj) {
   return request({
-    url: '/generator/doctorinspectresource',
+    url: '/base/doctorinspectresource',
     method: 'post',
     data: obj
   })
@@ -18,21 +18,21 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/generator/doctorinspectresource/' + id,
+    url: '/base/doctorinspectresource/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/generator/doctorinspectresource/' + id,
+    url: '/base/doctorinspectresource/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(obj) {
   return request({
-    url: '/generator/doctorinspectresource',
+    url: '/base/doctorinspectresource',
     method: 'put',
     data: obj
   })
