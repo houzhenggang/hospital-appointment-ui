@@ -6,9 +6,14 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   column: [
-	  {
-      label: '主键',
-      prop: 'inspResourceId'
+    {
+      fixed: true,
+      label: '编号',
+      prop: 'inspResourceId',
+      span: 24,
+      hide: true,
+      editDisabled: true,
+      addDisplay: false
     },
 	  {
       label: '检查类别（体格检查，功能检查，化验检查）',
@@ -38,21 +43,16 @@ export const tableOption = {
       label: '备注或说明',
       prop: 'remark'
     },
-	  {
+    {
+      width: 180,
       label: '创建时间',
-      prop: 'createTime'
-    },
-	  {
-      label: '修改时间',
-      prop: 'updateTime'
-    },
-	  {
-      label: '乐观锁字段',
-      prop: 'version'
-    },
-	  {
-      label: '逻辑删除标记(0--正常 1--删除)',
-      prop: 'delFlag'
-    },
+      prop: 'createTime',
+      type: 'datetime',
+      format: 'yyyy-MM-dd HH:mm',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      editDisabled: true,
+      addDisplay: false,
+      span: 24
+    }
   ]
 }

@@ -42,9 +42,9 @@
             ...mapGetters(['permissions']),
             permissionList() {
                 return {
-                    addBtn: this.vaildData(this.permissions.kasoft-register-biz_doctorinspectionitem_add, false),
-                    delBtn: this.vaildData(this.permissions.kasoft-register-biz_doctorinspectionitem_del, false),
-                    editBtn: this.vaildData(this.permissions.kasoft-register-biz_doctorinspectionitem_edit, false)
+                    addBtn: this.vaildData(this.permissions.base_doctorinspectionitem_add, false),
+                    delBtn: this.vaildData(this.permissions.base_doctorinspectionitem_del, false),
+                    editBtn: this.vaildData(this.permissions.base_doctorinspectionitem_edit, false)
                 };
             }
         },

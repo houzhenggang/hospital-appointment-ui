@@ -6,9 +6,14 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   column: [
-	  {
-      label: '主键',
-      prop: 'applyOrderId'
+    {
+      fixed: true,
+      label: '编号',
+      prop: 'applyOrderId',
+      span: 24,
+      hide: true,
+      editDisabled: true,
+      addDisplay: false
     },
 	  {
       label: '机构ID',
@@ -78,21 +83,16 @@ export const tableOption = {
       label: '订单状态',
       prop: 'orderState'
     },
-	  {
+    {
+      width: 180,
       label: '创建时间',
-      prop: 'createTime'
-    },
-	  {
-      label: '修改时间',
-      prop: 'updateTime'
-    },
-	  {
-      label: '乐观锁字段',
-      prop: 'version'
-    },
-	  {
-      label: '逻辑删除标记(0--正常 1--删除)',
-      prop: 'delFlag'
-    },
+      prop: 'createTime',
+      type: 'datetime',
+      format: 'yyyy-MM-dd HH:mm',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      editDisabled: true,
+      addDisplay: false,
+      span: 24
+    }
   ]
 }
