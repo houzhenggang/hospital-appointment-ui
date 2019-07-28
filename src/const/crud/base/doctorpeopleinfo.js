@@ -89,7 +89,7 @@ export const tableOption = {
       prop: 'note'
     },
 	  {
-      label: '地区',
+      label: '所属地区',
       prop: 'areaId'
     },
 	  {
