@@ -24,10 +24,7 @@ export const tableOption = {
   align: 'center',
   menuType: "text",
   labelWidth: "130",
-  props: {
-    label: 'label',
-    value: 'value'
-  },
+
   column: [
     {
       fixed: true,
@@ -76,7 +73,7 @@ export const tableOption = {
       search: true,
       props: {
         label: 'name',
-        value: 'id'
+        value: 'hospitalId'
       },
       rules: [{
         required: true,
