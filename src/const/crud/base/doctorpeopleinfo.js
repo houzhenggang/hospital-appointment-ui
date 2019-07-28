@@ -1,19 +1,4 @@
-/*
- *    Copyright (c) 2018-2025, lengleng All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- * Neither the name of the pig4cloud.com developer nor the names of its
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- * Author: lengleng (wangiegie@gmail.com)
- */
+import { getDict } from "@/util/util"
 
 export const tableOption = {
   border: true,
@@ -37,12 +22,11 @@ export const tableOption = {
       prop: 'cardNumber'
     },
 	  {
-      label: '医保卡照片',
-      prop: 'cardNumberImg'
-    },
-	  {
-      label: '慢性病 有无字段 0：无；1：有',
-      prop: 'hasChronicDisease'
+      label: '慢性病',
+      prop: 'hasChronicDisease',
+      type: 'select',
+      search: true,
+      dicData: getDict('have_no')
     },
 	  {
       label: '慢性病内容',
@@ -52,18 +36,16 @@ export const tableOption = {
       label: '身份证',
       prop: 'idCard'
     },
-	  {
-      label: '身份证正面照片',
-      prop: 'idCardFront'
-    },
-	  {
-      label: '身份证背面照片',
-      prop: 'idCardBack'
-    },
-	  {
-      label: '头像',
-      prop: 'headImg'
-    },
+    // {
+    //   label: '头像',
+    //   action: "/admin/file/uploadNew",
+    //   prop: 'headImg',
+    //   type: 'upload',
+    //   props: {
+    //     value: 'hospitalImage',
+    //     label: 'hospitalImage'
+    //   }
+    // },
 	  {
       label: '姓名',
       prop: 'name'
@@ -81,12 +63,18 @@ export const tableOption = {
       prop: 'tel'
     },
 	  {
-      label: '性别  1：男  2：女',
-      prop: 'sex'
+      label: '性别',
+      prop: 'sex',
+      type: 'select',
+      search: true,
+      dicData: getDict('gender')
     },
-	  {
+    {
       label: '出生日期',
-      prop: 'birthDate'
+      prop: 'birthDate',
+      type: 'date',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      format: 'yyyy-MM-dd',
     },
 	  {
       label: '联系人姓名',
@@ -103,10 +91,6 @@ export const tableOption = {
 	  {
       label: '地区',
       prop: 'areaId'
-    },
-	  {
-      label: '第三方关联编号',
-      prop: 'syncId'
     },
 	  {
       label: '关联用户编号',

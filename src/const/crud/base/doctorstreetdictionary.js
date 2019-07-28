@@ -31,7 +31,7 @@ export const tableOption = {
       search: true,
       rules: [{
         required: true,
-        message: '请选择编号',
+        message: '请输入编号',
         trigger: 'blur'
       }]
     },
@@ -41,7 +41,7 @@ export const tableOption = {
       search: true,
       rules: [{
         required: true,
-        message: '请选择名称',
+        message: '请输入名称',
         trigger: 'blur'
       }]
     },
@@ -51,7 +51,7 @@ export const tableOption = {
       search: true,
       rules: [{
         required: true,
-        message: '请选择上级编号',
+        message: '请输入上级编号',
         trigger: 'blur'
       }]
     },
