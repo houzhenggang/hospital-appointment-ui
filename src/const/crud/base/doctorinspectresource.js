@@ -16,10 +16,10 @@ export const tableOption = {
       addDisplay: false
     },
 	  {
-      label: '检查类别',
+      label: '医院',
       prop: 'hospitalName',
       type: "select",
-      dicUrl: '/admin/dict/type/kasoft_inspection_type',
+      dicUrl: '/admin/dict/type/kasoft_hospital',
     },
 	  {
       label: '检查项目',

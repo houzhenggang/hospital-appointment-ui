@@ -81,11 +81,17 @@ export const tableOption = {
     },
 	  {
       label: '预约时间',
-      prop: 'applyTime'
+      prop: 'applyTime',
+      type: "datetime",
+      format: 'yyyy-MM-dd HH:mm',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss',
     },
 	  {
       label: '详细时间',
-      prop: 'detailTime'
+      prop: 'detailTime',
+      type: "datetime",
+      format: 'yyyy-MM-dd HH:mm',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss',
     },
 	  {
       label: '备注',
@@ -104,7 +110,6 @@ export const tableOption = {
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
       editDisabled: true,
       addDisplay: false,
-      span: 24
     }
   ]
 }
