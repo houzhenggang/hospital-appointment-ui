@@ -18,6 +18,9 @@ export const tableOption = {
     {
       label: '机构名称',
       prop: 'hospitalName',
+      type: "select",
+      search: true,
+      dicUrl: '/admin/dict/type/kasoft_hospital',
     },
     {
       label: '机构电话',
@@ -38,7 +41,14 @@ export const tableOption = {
     },
     {
       label: '检查项目',
-      prop: 'insptItemName'
+      prop: 'insptItemName',
+      search: true,
+      type: 'select',
+      dicUrl: '/base/doctorinspectionitem/dict',
+      props: {
+        label: 'inspItemName',
+        value: 'inspItemId'
+      }
     },
     {
       label: '检查费用',

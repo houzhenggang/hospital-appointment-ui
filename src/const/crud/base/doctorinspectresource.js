@@ -19,12 +19,14 @@ export const tableOption = {
       label: '医院',
       prop: 'hospitalName',
       type: "select",
+      search: true,
       dicUrl: '/admin/dict/type/kasoft_hospital',
     },
 	  {
       label: '检查项目',
       prop: 'inspItemName',
       type: 'select',
+      search: true,
       dicUrl: '/base/doctorinspectionitem/dict',
       props: {
         label: 'inspItemName',

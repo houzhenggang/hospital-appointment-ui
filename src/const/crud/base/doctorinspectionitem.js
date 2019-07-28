@@ -20,6 +20,7 @@ export const tableOption = {
       label: '检查类别',
       prop: 'inspItemType',
       type: "select",
+      search: true,
       dicUrl: '/admin/dict/type/kasoft_inspection_type',
     },
 	  {
