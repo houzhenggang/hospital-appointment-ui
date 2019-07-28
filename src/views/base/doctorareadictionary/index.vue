@@ -8,7 +8,7 @@
                        :table-loading="tableLoading"
                        :option="tableOption"
                        @on-load="getList"
-                       @search-change="handleFilter"
+                       @search-change="searchChange"
                        @refresh-change="refreshChange"
                        @row-update="handleUpdate"
                        @row-save="handleSave"
@@ -37,6 +37,7 @@ export default {
   name: 'doctorareadictionary',
   data() {
     return {
+      searchForm: {},
       tableData: [],
       page: {
         total: 0, // 总页数
@@ -67,10 +68,12 @@ export default {
       fetchList(Object.assign({
         current: page.currentPage,
         size: page.pageSize
-      }, params)).then(response => {
+      }, params, this.searchForm )).then(response => {
         this.tableData = response.data.data.records
         this.page.total = response.data.data.total
         this.tableLoading = false
+      }).catch(() => {
+        this.tableLoading=false
       })
     },
     rowDel: function (row, index) {
@@ -129,15 +132,12 @@ export default {
         this.getList(this.page)
       })
     },
-    /**
-             * 刷新回调
-             */
+    searchChange(form) {
+      this.searchForm = form
+      this.getList(this.page, form)
+    },
     refreshChange() {
       this.getList(this.page)
-    },
-    handleFilter(param) {
-      this.page.page = 1;
-      this.getList(this.page, this.filterForm(param));
     }
   }
 }
