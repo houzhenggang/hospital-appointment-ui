@@ -10,9 +10,17 @@
                        @on-load="getList"
                        @search-change="searchChange"
                        @refresh-change="refreshChange"
-                       @row-update="handleUpdate"
-                       @row-save="handleSave"
-                       @row-del="rowDel">
+                       @row-save="handleSave">
+              <template slot-scope="scope" slot="menu">
+                <el-button type="primary"
+                           size="small"
+                           plain
+                           @click.stop="handleUpdate(scope.row,scope.index)">取消预约</el-button>
+                <el-button type="primary"
+                           size="small"
+                           plain
+                           @click.stop="handleEdit(scope.row,scope.index)">确认到场</el-button>
+              </template>
             </avue-crud>
         </basic-container>
     </div>

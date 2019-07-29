@@ -6,6 +6,7 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   labelWidth: "130",
+  width:"120",
   column: [
     {
       fixed: true,
@@ -20,6 +21,8 @@ export const tableOption = {
       prop: 'hospitalName',
       type: "select",
       search: true,
+      row:true,
+      span:14,
       dicUrl: '/admin/dict/type/kasoft_hospital',
     },
 	  {
@@ -27,6 +30,8 @@ export const tableOption = {
       prop: 'inspItemName',
       type: 'select',
       search: true,
+      row:true,
+      span:14,
       dicUrl: '/base/doctorinspectionitem/dict',
       props: {
         label: 'inspItemName',
@@ -39,31 +44,33 @@ export const tableOption = {
       prop: 'unitPrice',
       type: 'number',
       precision:2,
+      minRows: 0,
+      row:true,
+      span:14,
     },
 	  {
       label: '数量',
       prop: 'quantity',
       type: 'number',
+      row:true,
+      minRows: 0,
+      span:14,
     },
-	  {
-      label: '开始时间',
-      prop: 'startTime',
-      type: "datetime",
-      format: 'yyyy-MM-dd HH:mm',
-      valueFormat: 'yyyy-MM-dd HH:mm:ss',
+    {
+      label: '时间段',
+      prop: 'period',
+      type: 'select',
+      search: true,
+      row:true,
+      span:14,
+      dicUrl: '/admin/dict/type/kasoft_resource_period',
 
-    },
-
-	  {
-      label: '结束时间',
-      prop: 'endTime',
-      type: "datetime",
-      format: 'yyyy-MM-dd HH:mm',
-      valueFormat: 'yyyy-MM-dd HH:mm:ss',
     },
 	  {
       label: '备注或说明',
-      prop: 'remark'
+      prop: 'remark',
+      row: true,
+      span: 14,
     },
     {
       width: 180,
@@ -72,8 +79,7 @@ export const tableOption = {
       type: 'datetime',
       format: 'yyyy-MM-dd HH:mm',
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
-      editDisabled: true,
-      addDisplay: false,
+      hide: true
     }
   ]
 }
