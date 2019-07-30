@@ -60,13 +60,13 @@ export const mainTableOption = {
       label: '预约时间',
       children: [ {
         label: '开始',
-        prop: 'phone',
+        prop: 'startTime',
         type: "datetime",
         format: 'yyyy-MM-dd HH:mm',
         valueFormat: 'yyyy-MM-dd HH:mm:ss',
       }, {
         label: '结束',
-        prop: 'grade',
+        prop: 'endTime',
         type: "datetime",
         format: 'yyyy-MM-dd HH:mm',
         valueFormat: 'yyyy-MM-dd HH:mm:ss',

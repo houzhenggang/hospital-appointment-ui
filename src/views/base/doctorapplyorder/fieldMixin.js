@@ -48,8 +48,14 @@ export default {
             hide: true,
           },
           {
-            label: '预约时间',
-            prop: 'applyTime',
+            label: '开始',
+            prop: 'startTime',
+            type: "datetime",
+            format: 'yyyy-MM-dd HH:mm',
+            valueFormat: 'yyyy-MM-dd HH:mm:ss',
+          }, {
+            label: '结束',
+            prop: 'endTime',
             type: "datetime",
             format: 'yyyy-MM-dd HH:mm',
             valueFormat: 'yyyy-MM-dd HH:mm:ss',
