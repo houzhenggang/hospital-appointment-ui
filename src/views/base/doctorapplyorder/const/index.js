@@ -147,6 +147,7 @@ export const mainTableOption = {
       prop: 'orderState',
       type: "select",
       dicUrl: '/admin/dict/type/kasoft_apply_status',
+      slot: true
     },
     {
       width: 180,
