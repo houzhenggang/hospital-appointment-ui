@@ -1,10 +1,12 @@
-export const mainSearchOption = [{
-  label: "身份证",
-  prop: "userIdcard",
-}, {
-  label: '预约人',
-  prop: 'userName',
-}
+export const mainSearchOption = [
+  {
+    label: '用户姓名',
+    prop: 'userName',
+  },
+  {
+    label: '手机号',
+    prop: 'peoplePhone',
+  },
 ]
 
 export const mainTableOption = {
