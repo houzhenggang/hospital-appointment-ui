@@ -18,18 +18,18 @@
             <scm-button type="primary" @click="handleCreate">添加预约</scm-button>
           </template>
           <template slot-scope="scope" slot="orderState">
-            <el-tag type="success" v-if="scope.row.orderState === '1'">已预约</el-tag>
-            <el-tag type="info" v-if="scope.row.orderState === '2'">已检测</el-tag>
-            <el-tag type="warning" v-if="scope.row.orderState === '3'">已过期</el-tag>
+            <el-tag type="success" v-if="scope.row.orderState === '10'">已预约</el-tag>
+            <el-tag type="info" v-if="scope.row.orderState === '50'">已检测</el-tag>
+            <el-tag type="warning" v-if="scope.row.orderState === '30'">已过期</el-tag>
             <el-tag type="warning" v-if="scope.row.orderState === '20'">到场</el-tag>
             <el-tag type="warning" v-if="scope.row.orderState === '40'">已取消</el-tag>
           </template>
           <template slot-scope="scope" slot="menu">
             <div class="table-btn-group">
-              <scm-button type="text" v-if="scope.row.orderState === '1'" @click="handleCancelOrder(scope.row)"  :disabled="false">预约取消</scm-button>
-              <scm-button type="text" v-if="scope.row.orderState !== '1'" @click="handleCancelOrder(scope.row)"  :disabled="true">预约取消</scm-button>
-              <scm-button type="text" v-if="scope.row.orderState === '1'" @click="handleConfirmOrder(scope.row)"  :disabled="false">确认到场</scm-button>
-              <scm-button type="text" v-if="scope.row.orderState !== '1'" @click="handleConfirmOrder(scope.row)"  :disabled="true">确认到场</scm-button>
+              <scm-button type="text" v-if="scope.row.orderState === '10'" @click="handleCancelOrder(scope.row)"  :disabled="false">预约取消</scm-button>
+              <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleCancelOrder(scope.row)"  :disabled="true">预约取消</scm-button>
+              <scm-button type="text" v-if="scope.row.orderState === '10'" @click="handleConfirmOrder(scope.row)"  :disabled="false">确认到场</scm-button>
+              <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleConfirmOrder(scope.row)"  :disabled="true">确认到场</scm-button>
               <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>
               <!--<scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>-->
             </div>
