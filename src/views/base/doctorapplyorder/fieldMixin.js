@@ -28,7 +28,7 @@ export default {
           },
           {
             label: '检查项目',
-            prop: 'insp_item_id',
+            prop: 'inspItemId',
             type: 'select',
             dicUrl: '/base/doctorinspectionitem/dict',
             props: {
