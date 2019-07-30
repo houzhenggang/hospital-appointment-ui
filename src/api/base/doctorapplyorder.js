@@ -1,9 +1,9 @@
 import request from '@/router/axios'
-let baseUrl = "/base/doctorapplyorder"
+const baseUrl = '/base/doctorapplyorder'
 
 export function getMainTableData(params) {
   return request.get(`${baseUrl}/page`, {
-    params,
+    params
   })
 }
 

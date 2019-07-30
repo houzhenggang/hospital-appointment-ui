@@ -5,7 +5,7 @@ export const mainSearchOption = [{
   label: '预约人',
   prop: 'userName',
 }
- ]
+]
 
 export const mainTableOption = {
   page: true,
@@ -51,30 +51,30 @@ export const mainTableOption = {
       dicUrl: '/admin/dict/type/kasoft_hospital',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '机构电话',
       prop: 'hospitalPhone',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '机构地址',
       prop: 'hospitalAddr',
       span: 24,
-      row:true,
+      row: true,
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '检查项目ID',
       prop: 'insptItemId',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '检查项目',
@@ -95,13 +95,13 @@ export const mainTableOption = {
       prop: 'insptResourceId',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '机构ID',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
       prop: 'hospitalId',
     },
     {
@@ -109,14 +109,14 @@ export const mainTableOption = {
       prop: 'userId',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '数量',
       prop: 'quantity',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '预约时间',
@@ -133,14 +133,14 @@ export const mainTableOption = {
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '备注',
       prop: 'remark',
       editDisabled: true,
       addDisplay: false,
-      hide:true,
+      hide: true,
     },
     {
       label: '订单状态',
