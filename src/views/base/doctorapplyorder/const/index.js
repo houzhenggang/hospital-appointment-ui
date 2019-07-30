@@ -56,13 +56,21 @@ export const mainTableOption = {
         label: 'inspItemName',
         value: 'inspItemId'
       }
-    },
-    {
+    }, {
       label: '预约时间',
-      prop: 'applyTime',
-      type: "datetime",
-      format: 'yyyy-MM-dd HH:mm',
-      valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      children: [ {
+        label: '开始',
+        prop: 'phone',
+        type: "datetime",
+        format: 'yyyy-MM-dd HH:mm',
+        valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      }, {
+        label: '结束',
+        prop: 'grade',
+        type: "datetime",
+        format: 'yyyy-MM-dd HH:mm',
+        valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      }]
     },
     {
       label: '检查费用',
