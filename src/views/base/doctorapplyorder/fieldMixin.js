@@ -16,28 +16,19 @@ export default {
         column: [
           {
             label: '预约人',
-            prop: 'userName',
+            prop: 'peopleName',
           },
           {
             label: '身份证号',
-            prop: 'userIdcard',
+            prop: 'peopleIdcard',
           },
           {
             label: '手机号',
-            prop: 'userPhone',
-          },
-          {
-            label: '机构名称',
-            prop: 'hospitalName',
-            type: "select",
-            dicUrl: '/admin/dict/type/kasoft_hospital',
-            editDisabled: true,
-            addDisplay: false,
-            hide: true,
+            prop: 'peoplePhone',
           },
           {
             label: '检查项目',
-            prop: 'insptItemName',
+            prop: 'insp_item_id',
             type: 'select',
             dicUrl: '/base/doctorinspectionitem/dict',
             props: {

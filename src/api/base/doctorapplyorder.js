@@ -15,6 +15,10 @@ export function updateApplyOrder (formData) {
   return request.put(`${baseUrl}`, formData)
 }
 
+export function createApplyOrder (formData) {
+  return request.post(`${baseUrl}`, formData)
+}
+
 export function fetchList(query) {
   return request({
     url: '/base/doctorapplyorder/page',

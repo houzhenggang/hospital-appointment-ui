@@ -2,7 +2,7 @@
   <div class="execution">
     <basic-container>
       <header-layout>
-        <scm-search-bar :formProps="mainSearchOption" :listQuery="listQuery" @handleFilter="handleFilter" />
+        <scm-search-bar :formProps="mainSearchOption" :listQuery="listQuery" @handleFilter="handleFilter"/>
       </header-layout>
 
       <body-layout>
@@ -14,7 +14,9 @@
           @size-change="sizeChange"
           @current-change="currentChange"
           @row-save="handleSave">
-
+          <template slot="menuLeft">
+            <scm-button  type="primary" @click="handleCreate">添加预约</scm-button>
+          </template>
           <template slot-scope="scope" slot="orderState">
             <el-tag type="success" v-if="scope.row.orderState === '1'">已预约</el-tag>
             <el-tag type="info" v-if="scope.row.orderState === '2'">已检测</el-tag>
@@ -22,10 +24,10 @@
           </template>
           <template slot-scope="scope" slot="menu">
             <div class="table-btn-group">
-              <scm-button type="text"  @click="handlePharmacyControl(scope.row, scope.index)">预约取消</scm-button>
-              <scm-button type="text"  @click="handleServiceRecordInfoItem(scope.row, scope.index)">确认到场</scm-button>
-              <scm-button type="text"  @click="handleUpdate(scope.row)">编辑</scm-button>
-              <scm-button type="text"  @click="handleDelete(scope.row)">删除</scm-button>
+              <scm-button type="text" @click="handlePharmacyControl(scope.row, scope.index)">预约取消</scm-button>
+              <scm-button type="text" @click="handleServiceRecordInfoItem(scope.row, scope.index)">确认到场</scm-button>
+              <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>
+              <scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>
             </div>
           </template>
         </avue-crud>
@@ -35,7 +37,7 @@
         :loading="mainDialogLoading"
         :status="mainDialogStatus"
         @submit="handleCreateSubmit"
-        @update="handleUpdateSubmit" />
+        @update="handleUpdateSubmit"/>
     </basic-container>
   </div>
 </template>
@@ -44,7 +46,7 @@
     import {
         getMainTableData,
         deleteApplyOrder,
-        addObj,
+        createApplyOrder,
         updateApplyOrder
     } from '@/api/base/doctorapplyorder'
     import commonMixin from "@/mixins/mixins"
@@ -126,7 +128,7 @@
             },
             handleCreateSubmit(formData) {
                 this.mainDialogLoading = true
-                createHospital(formData).then(({data}) => {
+                createApplyOrder(formData).then(({data}) => {
                     if (data.code === 0) {
                         this.$message.success("新增预约订单成功")
                         this.getList()

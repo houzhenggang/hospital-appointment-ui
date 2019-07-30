@@ -14,7 +14,7 @@ export const mainTableOption = {
   editBtn: false,
   delBtn: false,
   viewBtn: false,
-  addBtn: true,
+  addBtn: false,
   index: true,
   indexLabel: "序号",
   menuAlign: 'center',
@@ -34,15 +34,15 @@ export const mainTableOption = {
   },
     {
       label: '预约人',
-      prop: 'userName',
+      prop: 'peopleName',
     },
     {
       label: '身份证号',
-      prop: 'userIdcard',
+      prop: 'peopleIdcard',
     },
     {
       label: '手机号',
-      prop: 'userPhone',
+      prop: 'peoplePhone',
     },
     {
       label: '机构名称',
@@ -70,15 +70,8 @@ export const mainTableOption = {
       hide: true,
     },
     {
-      label: '检查项目ID',
-      prop: 'insptItemId',
-      editDisabled: true,
-      addDisplay: false,
-      hide: true,
-    },
-    {
       label: '检查项目',
-      prop: 'insptItemName',
+      prop: 'insp_item_id',
       type: 'select',
       dicUrl: '/base/doctorinspectionitem/dict',
       props: {
