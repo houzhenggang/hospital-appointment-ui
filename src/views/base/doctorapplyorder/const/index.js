@@ -38,6 +38,7 @@ export const mainTableOption = {
     },
     {
       label: '身份证号',
+      width: 170,
       prop: 'peopleIdcard',
     },
     {
