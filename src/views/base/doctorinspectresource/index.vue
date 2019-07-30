@@ -20,7 +20,7 @@
 
 <script>
     import {fetchList, getObj, addObj, putObj, delObj} from '@/api/base/doctorinspectresource'
-    import {tableOption} from '@/const/crud/base/doctorinspectresource'
+    import {tableOption} from './const/index'
     import {mapGetters} from 'vuex'
 
     export default {
