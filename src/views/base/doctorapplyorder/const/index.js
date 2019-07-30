@@ -1,7 +1,7 @@
 export const mainSearchOption = [
   {
     label: '用户姓名',
-    prop: 'userName',
+    prop: 'peopleName',
   },
   {
     label: '手机号',
