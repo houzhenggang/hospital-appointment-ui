@@ -21,11 +21,13 @@
             <el-tag type="success" v-if="scope.row.orderState === '1'">已预约</el-tag>
             <el-tag type="info" v-if="scope.row.orderState === '2'">已检测</el-tag>
             <el-tag type="warning" v-if="scope.row.orderState === '3'">已过期</el-tag>
+            <el-tag type="warning" v-if="scope.row.orderState === '20'">到场</el-tag>
+            <el-tag type="warning" v-if="scope.row.orderState === '40'">已取消</el-tag>
           </template>
           <template slot-scope="scope" slot="menu">
             <div class="table-btn-group">
-              <scm-button type="text" @click="handlePharmacyControl(scope.row, scope.index)">预约取消</scm-button>
-              <scm-button type="text" @click="handleServiceRecordInfoItem(scope.row, scope.index)">确认到场</scm-button>
+              <scm-button type="text" @click="handleCancelOrder(scope.row)">预约取消</scm-button>
+              <scm-button type="text" @click="handleConfirmOrder(scope.row)">确认到场</scm-button>
               <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>
               <scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>
             </div>
@@ -88,7 +90,7 @@
                 this.$refs['mainDialog'].open({})
             },
             handleDelete(rowData) {
-                this.$confirm(`是否删除档案：${rowData.applyOrderId}`, '提示', {
+                this.$confirm(`是否删除预约：${rowData.applyOrderId}`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -99,6 +101,42 @@
                             this.getList()
                         } else {
                             this.$message.error(`删除失败！${data.msg}`)
+                        }
+                    })
+                }).catch(() => {
+                })
+            },
+            handleCancelOrder(formData) {
+                this.$confirm(`是否取消预约：${formData.applyOrderId}`, '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    formData.orderState=40
+                    updateApplyOrder(formData).then(({data}) => {
+                        if (data.code === 0) {
+                            this.$message.success("取消预约成功")
+                            this.getList()
+                        } else {
+                            this.$message.error("取消预约失败")
+                        }
+                    })
+                }).catch(() => {
+                })
+            },
+            handleConfirmOrder(formData) {
+                this.$confirm(`是否确认到场：${formData.applyOrderId}`, '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    formData.orderState=20
+                    updateApplyOrder(formData).then(({data}) => {
+                        if (data.code === 0) {
+                            this.$message.success("修改成功")
+                            this.getList()
+                        } else {
+                            this.$message.error("修改失败")
                         }
                     })
                 }).catch(() => {
