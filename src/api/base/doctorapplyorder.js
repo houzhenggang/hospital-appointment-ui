@@ -1,4 +1,16 @@
 import request from '@/router/axios'
+let baseUrl = "/base/doctorapplyorder"
+
+export function getMainTableData(params) {
+  return request.get(`${baseUrl}/page`, {
+    params,
+  })
+}
+
+export function deleteApplyOrder(id) {
+  return request.delete(`${baseUrl}/${id}`)
+}
+
 
 export function fetchList(query) {
   return request({

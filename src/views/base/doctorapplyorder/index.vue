@@ -1,105 +1,101 @@
 <template>
-    <div class="execution">
-        <basic-container>
-            <avue-crud ref="crud"
-                       :page="page"
-                       :data="tableData"
-                       :permission="permissionList"
-                       :table-loading="tableLoading"
-                       :option="tableOption"
-                       @on-load="getList"
-                       @search-change="searchChange"
-                       @refresh-change="refreshChange"
-                       @row-save="handleSave">
-              <template slot-scope="scope" slot="menu">
-                <el-button type="primary"
-                           size="small"
-                           plain
-                           @click.stop="handleUpdate(scope.row,scope.index)">取消预约</el-button>
-                <el-button type="primary"
-                           size="small"
-                           plain
-                           @click.stop="handleEdit(scope.row,scope.index)">确认到场</el-button>
-              </template>
-            </avue-crud>
-        </basic-container>
-    </div>
+  <div class="execution">
+    <basic-container>
+      <header-layout>
+        <scm-search-bar :formProps="mainSearchOption" :listQuery="listQuery" @handleFilter="handleFilter" />
+      </header-layout>
+
+      <body-layout>
+        <avue-crud
+          :table-loading="tableLoading"
+          :data="mainTableData"
+          :option="mainTableOption"
+          :page="pagination"
+          @size-change="sizeChange"
+          @current-change="currentChange"
+          @row-save="handleSave">
+
+          <template slot-scope="scope" slot="orderState">
+            <el-tag type="success" v-if="scope.row.orderState === '1'">已预约</el-tag>
+            <el-tag type="info" v-if="scope.row.orderState === '2'">已检测</el-tag>
+            <el-tag type="warning" v-if="scope.row.orderState === '3'">已过期</el-tag>
+          </template>
+          <template slot-scope="scope" slot="menu">
+            <div class="table-btn-group">
+              <scm-button type="text"  @click="handlePharmacyControl(scope.row, scope.index)">预约取消</scm-button>
+              <scm-button type="text"  @click="handleServiceRecordInfoItem(scope.row, scope.index)">确认到场</scm-button>
+              <scm-button type="text"  @click="handleServiceSignItem(scope.row, scope.index)">编辑</scm-button>
+              <scm-button type="text"  @click="handleDelete(scope.row)">删除</scm-button>
+            </div>
+          </template>
+        </avue-crud>
+      </body-layout>
+    </basic-container>
+  </div>
 </template>
 
 <script>
-    import {fetchList, getObj, addObj, putObj, delObj} from '@/api/base/doctorapplyorder'
-    import {tableOption} from '@/const/crud/base/doctorapplyorder'
-    import {mapGetters} from 'vuex'
+    import {
+        getMainTableData,
+        deleteApplyOrder,
+        addObj,
+    } from '@/api/base/doctorapplyorder'
+    import commonMixin from "@/mixins/mixins"
+    import {
+        mainSearchOption,
+        mainTableOption,
+    } from "./const/index"
+
 
     export default {
+        mixins: [commonMixin],
         name: 'doctorapplyorder',
+        components: {
+        },
         data() {
             return {
-                searchForm: {},
-                tableData: [],
-                page: {
-                    total: 0, // 总页数
-                    currentPage: 1, // 当前页数
-                    pageSize: 20 // 每页显示多少条
-                },
-                tableLoading: false,
-                tableOption: tableOption
-            }
-        },
-        computed: {
-            ...mapGetters(['permissions']),
-            permissionList() {
-                return {
-                    addBtn: this.vaildData(this.permissions.base_doctorapplyorder_add, false),
-                    delBtn: this.vaildData(this.permissions.base_doctorapplyorder_del, false),
-                    editBtn: this.vaildData(this.permissions.base_doctorapplyorder_edit, false)
-                };
+                mainSearchOption,
+                mainTableOption,
+                mainTableData: [],
+                type: 0,
+                item: {},
+                form: {},
+
             }
         },
         methods: {
-            getList(page, params) {
+            getList () {
                 this.tableLoading = true
-                fetchList(Object.assign({
-                    current: page.currentPage,
-                    size: page.pageSize
-                }, params, this.searchForm )).then(response => {
-                    this.tableData = response.data.data.records
-                    this.page.total = response.data.data.total
+                getMainTableData(this.listQuery).then(({data}) => {
+                    this.mainTableData = data.data.records
+                    this.pagination.total = data.data.total
                     this.tableLoading = false
-                }).catch(() => {
-                    this.tableLoading=false
                 })
             },
-            rowDel: function (row, index) {
-                var _this = this
-                this.$confirm('是否确认删除ID为' + row.applyOrderId, '提示', {
+            handleCreate () {
+                this.mainDialogStatus = "create"
+                this.$refs['mainDialog'].open({})
+            },
+            handleDelete (rowData) {
+                this.$confirm(`是否删除档案：${rowData.applyOrderId}`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
-                }).then(function () {
-                    return delObj(row.applyOrderId)
-                }).then(data => {
-                    _this.tableData.splice(index, 1)
-                    _this.$message({
-                        showClose: true,
-                        message: '删除成功',
-                        type: 'success'
+                }).then(() => {
+                    deleteApplyOrder(rowData.applyOrderId).then(({data}) => {
+                        if (data.code === 0) {
+                            this.$message.success("删除成功！")
+                            this.getList()
+                        } else {
+                            this.$message.error(`删除失败！${data.msg}`)
+                        }
                     })
-                    this.getList(this.page)
-                })
+                }).catch(() => {})
             },
-            handleUpdate: function (row, index, done,loading) {
-                putObj(row).then(data => {
-                    this.$message({
-                        showClose: true,
-                        message: '修改成功',
-                        type: 'success'
-                    })
-                    done()
-                    this.getList(this.page)
-                }).catch(() => {
-                    loading();
-                });
+            handleItem: function (row) {
+                this.dialogFormVisible = true;
+                this.tableLoading = true;
+                console.log(row.id);
             },
             handleSave: function (row, done,loading) {
                 addObj(row).then(data => {
@@ -114,16 +110,16 @@
                     loading();
                 });
             },
-            searchChange(form) {
-                this.searchForm = form
-                this.getList(this.page, form)
-            },
-            refreshChange() {
-                this.getList(this.page)
-            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+  .el-dropdown-link {
+    color: #3a8ee6 !important;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 12px;
+  }
 </style>
+
