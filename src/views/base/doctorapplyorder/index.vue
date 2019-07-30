@@ -24,12 +24,18 @@
             <div class="table-btn-group">
               <scm-button type="text"  @click="handlePharmacyControl(scope.row, scope.index)">预约取消</scm-button>
               <scm-button type="text"  @click="handleServiceRecordInfoItem(scope.row, scope.index)">确认到场</scm-button>
-              <scm-button type="text"  @click="handleServiceSignItem(scope.row, scope.index)">编辑</scm-button>
+              <scm-button type="text"  @click="handleUpdate(scope.row)">编辑</scm-button>
               <scm-button type="text"  @click="handleDelete(scope.row)">删除</scm-button>
             </div>
           </template>
         </avue-crud>
       </body-layout>
+      <mainDialog
+        ref="mainDialog"
+        :loading="mainDialogLoading"
+        :status="mainDialogStatus"
+        @submit="handleCreateSubmit"
+        @update="handleUpdateSubmit" />
     </basic-container>
   </div>
 </template>
@@ -39,24 +45,27 @@
         getMainTableData,
         deleteApplyOrder,
         addObj,
+        updateApplyOrder
     } from '@/api/base/doctorapplyorder'
     import commonMixin from "@/mixins/mixins"
     import {
         mainSearchOption,
         mainTableOption,
     } from "./const/index"
-
+    import mainDialog from "./mainDialog"
 
     export default {
         mixins: [commonMixin],
         name: 'doctorapplyorder',
         components: {
+            mainDialog
         },
         data() {
             return {
                 mainSearchOption,
                 mainTableOption,
                 mainTableData: [],
+                mainDialogStatus: "detail",
                 type: 0,
                 item: {},
                 form: {},
@@ -64,7 +73,7 @@
             }
         },
         methods: {
-            getList () {
+            getList() {
                 this.tableLoading = true
                 getMainTableData(this.listQuery).then(({data}) => {
                     this.mainTableData = data.data.records
@@ -72,11 +81,11 @@
                     this.tableLoading = false
                 })
             },
-            handleCreate () {
+            handleCreate() {
                 this.mainDialogStatus = "create"
                 this.$refs['mainDialog'].open({})
             },
-            handleDelete (rowData) {
+            handleDelete(rowData) {
                 this.$confirm(`是否删除档案：${rowData.applyOrderId}`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -90,14 +99,19 @@
                             this.$message.error(`删除失败！${data.msg}`)
                         }
                     })
-                }).catch(() => {})
+                }).catch(() => {
+                })
+            },
+            handleUpdate(rowData) {
+                this.mainDialogStatus = "update"
+                this.$refs['mainDialog'].open(rowData)
             },
             handleItem: function (row) {
                 this.dialogFormVisible = true;
                 this.tableLoading = true;
                 console.log(row.id);
             },
-            handleSave: function (row, done,loading) {
+            handleSave: function (row, done, loading) {
                 addObj(row).then(data => {
                     this.$message({
                         showClose: true,
@@ -110,6 +124,32 @@
                     loading();
                 });
             },
+            handleCreateSubmit(formData) {
+                this.mainDialogLoading = true
+                createHospital(formData).then(({data}) => {
+                    if (data.code === 0) {
+                        this.$message.success("新增预约订单成功")
+                        this.getList()
+                        this.$refs['mainDialog'].close()
+                    } else {
+                        this.$message.error("新增预约订单失败")
+                    }
+                    this.mainDialogLoading = false
+                })
+            },
+            handleUpdateSubmit(formData) {
+                this.mainDialogLoading = true
+                updateApplyOrder(formData).then(({data}) => {
+                    if (data.code === 0) {
+                        this.$message.success("修改预约订单成功")
+                        this.getList()
+                        this.$refs['mainDialog'].close()
+                    } else {
+                        this.$message.error("修改预约订单失败")
+                    }
+                    this.mainDialogLoading = false
+                })
+            }
         }
     }
 </script>

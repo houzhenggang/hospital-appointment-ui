@@ -11,6 +11,9 @@ export function deleteApplyOrder(id) {
   return request.delete(`${baseUrl}/${id}`)
 }
 
+export function updateApplyOrder (formData) {
+  return request.put(`${baseUrl}`, formData)
+}
 
 export function fetchList(query) {
   return request({
