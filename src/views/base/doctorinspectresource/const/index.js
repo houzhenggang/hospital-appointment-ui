@@ -20,7 +20,6 @@ export const tableOption = {
       label: '医院名称',
       prop: 'hospitalName',
       type: "select",
-      search: true,
       row: true,
       span: 14,
       dicUrl: '/admin/dict/type/kasoft_hospital',

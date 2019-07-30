@@ -56,10 +56,6 @@ export const mainTableOption = {
       }
     },
     {
-      label: '检查费用',
-      prop: 'feeTotal'
-    },
-    {
       label: '预约时间',
       prop: 'applyTime',
       type: "datetime",
@@ -67,19 +63,15 @@ export const mainTableOption = {
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
     },
     {
+      label: '检查费用',
+      prop: 'feeTotal'
+    },
+    {
       label: '订单状态',
       prop: 'orderState',
       type: "select",
       dicUrl: '/admin/dict/type/kasoft_apply_status',
       slot: true
-    },
-    {
-      width: 180,
-      label: '创建时间',
-      prop: 'createTime',
-      type: 'datetime',
-      format: 'yyyy-MM-dd HH:mm',
-      valueFormat: 'yyyy-MM-dd HH:mm:ss',
     }
   ]
 }
