@@ -1,40 +1,4 @@
 
-const HOSPITAL_LEVEL = [
-  {
-    label: "一级甲等",
-    value: "1-1",
-  }, {
-    label: "一级乙等",
-    value: "1-2",
-  }, {
-    label: "一级丙等",
-    value: "1-3",
-  }, {
-    label: "二级甲等",
-    value: "2-1",
-  }, {
-    label: "二级乙等",
-    value: "2-2",
-  }, {
-    label: "二级丙等",
-    value: "2-3",
-  }, {
-    label: "三级甲等",
-    value: "3-1",
-  }, {
-    label: "三级乙等",
-    value: "3-2",
-  }, {
-    label: "三级丙等",
-    value: "3-3",
-  }
-]
-
-const YES_OR_NO = [
-  { label: "是", value: "1" },
-  { label: "否", value: "0" }
-]
-
 export default {
   data () {
     return {
@@ -42,9 +6,6 @@ export default {
     }
   },
   created () {
-    this.axios.get(`/base/doctorareadictionary/allTree`).then(({data}) => {
-      this.areaList = data.data
-    })
   },
   computed: {
     mainDialogFormOption () {
