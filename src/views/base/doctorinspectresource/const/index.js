@@ -1,12 +1,34 @@
-export const tableOption = {
-  border: true,
+export const mainSearchOption = [
+  {
+    label: '项目名称',
+    prop: 'inspItemName',
+    type: 'select',
+    search: true,
+    dicUrl: '/base/doctorinspectionitem/dict',
+    props: {
+      label: 'inspItemName',
+      value: 'inspItemId'
+    }
+  },
+]
+
+export const mainTableOption = {
+  page: true,
+  menu: true,
+  header: true,
+  editBtn: false,
+  delBtn: false,
+  viewBtn: false,
+  addBtn: false,
   index: true,
-  indexLabel: '序号',
-  stripe: true,
+  indexLabel: "序号",
   menuAlign: 'center',
   align: 'center',
-  labelWidth: "130",
-  width: "120",
+  menuWidth: "280",
+  props: {
+    label: 'label',
+    value: 'value'
+  },
   column: [
     {
       fixed: true,
@@ -26,7 +48,6 @@ export const tableOption = {
       label: '项目名称',
       prop: 'inspItemName',
       type: 'select',
-      search: true,
       dicUrl: '/base/doctorinspectionitem/dict',
       props: {
         label: 'inspItemName',
@@ -58,14 +79,17 @@ export const tableOption = {
       prop: 'startTime',
       type: "time",
       format:'hh:mm',
-      valueFormat:'hh:mm:ss',
+      valueFormat:'yyyy-MM-dd hh:mm:ss',
     },
     {
       label: '结束时间',
       prop: 'endTime',
       type: "time",
       format:'hh:mm',
-      valueFormat:'hh:mm:ss',
+      valueFormat:'yyyy-MM-dd hh:mm:ss',
+      change: () => {
+        console.log('值改变')
+      },
     },
     {
       label: '备注或说明',

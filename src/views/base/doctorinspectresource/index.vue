@@ -1,99 +1,115 @@
 <template>
-    <div class="execution">
-        <basic-container>
-            <avue-crud ref="crud"
-                       :page="page"
-                       :data="tableData"
-                       :permission="permissionList"
-                       :table-loading="tableLoading"
-                       :option="tableOption"
-                       @on-load="getList"
-                       @search-change="searchChange"
-                       @refresh-change="refreshChange"
-                       @row-update="handleUpdate"
-                       @row-save="handleSave"
-                       @row-del="rowDel">
-            </avue-crud>
-        </basic-container>
-    </div>
+  <div class="execution">
+    <basic-container>
+      <header-layout>
+        <scm-search-bar :formProps="mainSearchOption" :listQuery="listQuery" @handleFilter="handleFilter"/>
+      </header-layout>
+
+      <body-layout>
+        <avue-crud
+          :table-loading="tableLoading"
+          :data="mainTableData"
+          :option="mainTableOption"
+          :page="pagination"
+          @size-change="sizeChange"
+          @current-change="currentChange"
+          @row-save="handleSave">
+          <template slot="menuLeft">
+            <scm-button type="primary" @click="handleCreate">添加</scm-button>
+          </template>
+
+          <template slot-scope="scope" slot="menu">
+            <div class="table-btn-group">
+              <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>
+              <scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>
+            </div>
+          </template>
+        </avue-crud>
+      </body-layout>
+      <mainDialog
+        ref="mainDialog"
+        :loading="mainDialogLoading"
+        :status="mainDialogStatus"
+        @submit="handleCreateSubmit"
+        @update="handleUpdateSubmit"/>
+    </basic-container>
+  </div>
 </template>
 
+
 <script>
-    import {fetchList, getObj, addObj, putObj, delObj} from '@/api/base/doctorinspectresource'
-    import {tableOption} from './const/index'
-    import {mapGetters} from 'vuex'
+    import {
+        getMainTableData,
+        deleteInspRes,
+        updateInspRes,
+        createInspRes
+    } from '@/api/base/doctorinspectresource'
+    import commonMixin from "@/mixins/mixins"
+    import {
+        mainSearchOption,
+        mainTableOption,
+    } from "./const/index"
+    import mainDialog from "./mainDialog"
 
     export default {
+        mixins: [commonMixin],
         name: 'doctorinspectresource',
+        components: {
+            mainDialog
+        },
         data() {
             return {
-                searchForm: {},
-                tableData: [],
-                page: {
-                    total: 0, // 总页数
-                    currentPage: 1, // 当前页数
-                    pageSize: 20 // 每页显示多少条
-                },
-                tableLoading: false,
-                tableOption: tableOption
-            }
-        },
-        computed: {
-            ...mapGetters(['permissions']),
-            permissionList() {
-                return {
-                    addBtn: this.vaildData(this.permissions.base_doctorinspectresource_add, false),
-                    delBtn: this.vaildData(this.permissions.base_doctorinspectresource_del, false),
-                    editBtn: this.vaildData(this.permissions.base_doctorinspectresource_edit, false)
-                };
+                mainSearchOption,
+                mainTableOption,
+                mainTableData: [],
+                mainDialogStatus: "detail",
+                mainDialogLoading:false,
+                type: 0,
+                item: {},
+                form: {},
+
             }
         },
         methods: {
-            getList(page, params) {
+            getList() {
                 this.tableLoading = true
-                fetchList(Object.assign({
-                    current: page.currentPage,
-                    size: page.pageSize
-                }, params, this.searchForm )).then(response => {
-                    this.tableData = response.data.data.records
-                    this.page.total = response.data.data.total
+                getMainTableData(this.listQuery).then(({data}) => {
+                    this.mainTableData = data.data.records
+                    this.pagination.total = data.data.total
                     this.tableLoading = false
-                }).catch(() => {
-                    this.tableLoading=false
                 })
             },
-            rowDel: function (row, index) {
-                var _this = this
-                this.$confirm('是否确认删除ID为' + row.inspResourceId, '提示', {
+            handleCreate() {
+                this.mainDialogStatus = "create"
+                this.$refs['mainDialog'].open({})
+            },
+            handleDelete(rowData) {
+                this.$confirm(`是否删除预约：${rowData.inspResourceId}`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
-                }).then(function () {
-                    return delObj(row.inspResourceId)
-                }).then(data => {
-                    _this.tableData.splice(index, 1)
-                    _this.$message({
-                        showClose: true,
-                        message: '删除成功',
-                        type: 'success'
+                }).then(() => {
+                    deleteInspRes(rowData.inspResourceId).then(({data}) => {
+                        if (data.code === 0) {
+                            this.$message.success("删除成功！")
+                            this.getList()
+                        } else {
+                            this.$message.error(`删除失败！${data.msg}`)
+                        }
                     })
-                    this.getList(this.page)
+                }).catch(() => {
                 })
             },
-            handleUpdate: function (row, index, done,loading) {
-                putObj(row).then(data => {
-                    this.$message({
-                        showClose: true,
-                        message: '修改成功',
-                        type: 'success'
-                    })
-                    done()
-                    this.getList(this.page)
-                }).catch(() => {
-                    loading();
-                });
+            handleUpdate(rowData) {
+                this.mainDialogStatus = "update"
+                this.$refs['mainDialog'].open(rowData)
             },
-            handleSave: function (row, done,loading) {
+            handleItem: function (row) {
+                this.dialogFormVisible = true;
+                this.tableLoading = true;
+                console.log(row.id);
+            },
+            handleSave: function (row, done, loading) {
                 addObj(row).then(data => {
                     this.$message({
                         showClose: true,
@@ -106,16 +122,45 @@
                     loading();
                 });
             },
-            searchChange(form) {
-                this.searchForm = form
-                this.getList(this.page, form)
+            handleCreateSubmit(formData) {
+                this.mainDialogLoading = true
+                createInspRes(formData).then(({data}) => {
+                    if (data.code === 0) {
+                        this.$message.success("新增预约订单成功")
+                        this.getList()
+                        this.$refs['mainDialog'].close()
+                    } else {
+                        this.$message.error("新增预约订单失败")
+                    }
+                    this.mainDialogLoading = false
+                })
             },
-            refreshChange() {
-                this.getList(this.page)
+            handleUpdateSubmit(formData) {
+                this.mainDialogLoading = true
+                updateInspRes(formData).then(({data}) => {
+                    if (data.code === 0) {
+                        this.$message.success("修改预约订单成功")
+                        this.getList()
+                        this.$refs['mainDialog'].close()
+                    } else {
+                        this.$message.error("修改预约订单失败")
+                    }
+                    this.mainDialogLoading = false
+                })
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+  .el-dropdown-link {
+    color: #3a8ee6 !important;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 12px;
+  }
 </style>
+
+
+
+
