@@ -62,9 +62,8 @@
                 let hospitalId = this.formData.hospitalId;
                 console.log("handSubmit:"+hospitalId)
                 getHospitalById(hospitalId).then(({data}) => {
-                    console.log("getHospitalById:"+data)
+                    console.log("getHospitalById:"+JSON.parse(data.data))
                 })
-                console.log(this.formData.period+";inspltemAp="+this.formData.inspltemAp)
                 this.$refs["form"].validate(valid => {
                     if (valid) {
                         if (this.status === "create") {
