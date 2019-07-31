@@ -19,9 +19,9 @@
         data() {
             return {
                 dialogStatus: {
-                    create: "新增预约订单",
-                    update: "修改预约订单",
-                    detail: "医疗预约订单"
+                    create: "新增资源",
+                    update: "修改资源",
+                    detail: "资源详细"
                 },
                 formData: {}
             }

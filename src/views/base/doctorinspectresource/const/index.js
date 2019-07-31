@@ -40,7 +40,7 @@ export const mainTableOption = {
     },
     {
       label: '医院名称',
-      prop: 'hospitalName',
+      prop: 'hospitalId',
       type: "select",
       dicUrl: '/base/doctorhospital/dict',
       props: {
