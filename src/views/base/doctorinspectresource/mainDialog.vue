@@ -65,7 +65,7 @@
                 getHospitalById(hospitalId).then(({data}) => {
                     //console.log("getHospitalById:"+data.data.name)
                     this.formData.hospitalName=data.data.name
-
+                    this.formData.hospitalPhone=data.data.phone
                     getinspItemById(this.formData.inspItemId).then(({data}) => {
                         //console.log("getinspItemById:"+JSON.stringify(data.data))
                         this.formData.inspItemName=data.data.inspItemName

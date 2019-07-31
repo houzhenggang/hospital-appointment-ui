@@ -123,8 +123,9 @@ export default {
       immediate: true,
       handler(newVal) {
         if (newVal) {
-          //console.log("watch-startTime:" + newVal);
-          this.Add1Hour(newVal)
+          console.log("watch-inspItemDate:" + this.formData.inspItemDate);
+          this.Add1Hour(this.formData.inspItemDate,newVal)
+          //this.formateDay(this.formData.inspItemDate,newVal)
         }
       }
     },
@@ -140,9 +141,8 @@ export default {
     }
   },
   methods: {
-    Add1Hour(dateStr) {
+    Add1Hour(baseDate,dateStr) {
       let date = new Date(dateStr)
-      let year = date.getFullYear();
       let month = (date.getMonth() + 1).toString();
       let day = (date.getDate()).toString();
       let hour = date.getHours().toString();
@@ -157,12 +157,18 @@ export default {
       if (hour<10) {
         hour = "0" + hour;
       }
+      if (minutes<10) {
+        minutes = "0" + minutes;
+      }
       if (seconds<10) {
         seconds = "0" + seconds;
       }
-      let dateTime = year + "-" + month + "-" + day + " " + hour + ":59" + ":" + seconds;
+      let dateTime_s = baseDate + " " + hour + ":" +minutes+ ":" + seconds;
+      let dateTime_e = baseDate + " " + hour + ":59" + ":" + seconds;
+      //console.log("Add1Hour-baseDate:" + baseDate+";dateTime="+dateTime_e+";dateTime_s="+dateTime_s);
       this.$nextTick(() => {
-        this.$set(this.formData, "endTime", dateTime)
+        this.$set(this.formData, "startTime", dateTime_s)
+        this.$set(this.formData, "endTime", dateTime_e)
 
       })
       this.checkperiod(date.getHours());
