@@ -175,7 +175,7 @@ export default {
       this.$set(this.formData, "inspItemAp", timeValue)
     },
     checkperiod(hour) {
-      let period = "8:00~9:00"
+      let period = "1"
        if(hour<=8)
        {
          //period = "8:00~9:00"
