@@ -126,11 +126,11 @@
                 this.mainDialogLoading = true
                 createInspRes(formData).then(({data}) => {
                     if (data.code === 0) {
-                        this.$message.success("新增预约订单成功")
+                        this.$message.success("新增资源成功")
                         this.getList()
                         this.$refs['mainDialog'].close()
                     } else {
-                        this.$message.error("新增预约订单失败")
+                        this.$message.error("新增资源失败")
                     }
                     this.mainDialogLoading = false
                 })
@@ -139,11 +139,11 @@
                 this.mainDialogLoading = true
                 updateInspRes(formData).then(({data}) => {
                     if (data.code === 0) {
-                        this.$message.success("修改预约订单成功")
+                        this.$message.success("修改资源成功")
                         this.getList()
                         this.$refs['mainDialog'].close()
                     } else {
-                        this.$message.error("修改预约订单失败")
+                        this.$message.error("修改资源失败")
                     }
                     this.mainDialogLoading = false
                 })
