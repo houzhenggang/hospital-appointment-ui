@@ -5,7 +5,8 @@ var validateUsername = (rule, value, callback) => {
   getDetails(value).then(response => {
     if (window.boxType === 'edit') callback()
     let result = response.data.data
-    if (result !== null) {
+    console.log(result)
+    if (result !== undefined) {
       callback(new Error('用户名已经存在'))
     } else {
       callback()
