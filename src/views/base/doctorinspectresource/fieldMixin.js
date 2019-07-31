@@ -157,6 +157,9 @@ export default {
       if (hour<10) {
         hour = "0" + hour;
       }
+      if (seconds<10) {
+        seconds = "0" + seconds;
+      }
       let dateTime = year + "-" + month + "-" + day + " " + hour + ":59" + ":" + seconds;
       this.$nextTick(() => {
         this.$set(this.formData, "endTime", dateTime)
