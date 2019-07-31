@@ -60,21 +60,25 @@
             handleSubmit() {
                 delete this.formData.tenantId
                 let hospitalId = this.formData.hospitalId;
-                console.log("handSubmit:"+hospitalId)
+               // console.log("handSubmit:"+hospitalId)
                 getHospitalById(hospitalId).then(({data}) => {
-                    console.log("getHospitalById:"+JSON.parse(data.data))
-                })
-                this.$refs["form"].validate(valid => {
-                    if (valid) {
-                        if (this.status === "create") {
-                            this.$emit("submit", this.formData)
+                    //console.log("getHospitalById:"+data.data.name)
+                    this.formData.hospitalName=data.data.name
+
+                    console.log("handleSubmit:"+JSON.stringify(this.formData))
+                    this.$refs["form"].validate(valid => {
+                        if (valid) {
+                            if (this.status === "create") {
+                                this.$emit("submit", this.formData)
+                            } else {
+                                this.$emit("update", this.formData)
+                            }
                         } else {
-                            this.$emit("update", this.formData)
+                            this.$message.error("请先规范填写表单后提交！")
                         }
-                    } else {
-                        this.$message.error("请先规范填写表单后提交！")
-                    }
+                    })
                 })
+
             }
         }
     }
