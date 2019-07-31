@@ -29,6 +29,7 @@
               <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleCancelOrder(scope.row)"  :disabled="true">预约取消</scm-button>
               <scm-button type="text" v-if="scope.row.orderState === '10'" @click="handleConfirmOrder(scope.row)"  :disabled="false">确认到场</scm-button>
               <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleConfirmOrder(scope.row)"  :disabled="true">确认到场</scm-button>
+
               <!--
                <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>
               <scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>
@@ -93,7 +94,7 @@
                 this.$refs['mainDialog'].open({})
             },
             handleDelete(rowData) {
-                this.$confirm(`是否删除预约：${rowData.applyOrderId}`, '提示', {
+                this.$confirm(`是否删除预约：${rowData.peopleName}`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -110,7 +111,7 @@
                 })
             },
             handleCancelOrder(formData) {
-                this.$confirm(`是否取消预约：${formData.applyOrderId}`, '提示', {
+                this.$confirm(`是否取消预约：${formData.peopleName}`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -128,7 +129,7 @@
                 })
             },
             handleConfirmOrder(formData) {
-                this.$confirm(`是否确认到场：${formData.applyOrderId}`, '提示', {
+                this.$confirm(`是否确认到场：${formData.peopleName}`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
