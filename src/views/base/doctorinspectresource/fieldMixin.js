@@ -123,9 +123,7 @@ export default {
       immediate: true,
       handler(newVal) {
         if (newVal) {
-          console.log("watch-inspItemDate:" + this.formData.inspItemDate);
-          this.Add1Hour(this.formData.inspItemDate,newVal)
-          //this.formateDay(this.formData.inspItemDate,newVal)
+          this.Add1Hour(newVal)
         }
       }
     },
@@ -135,14 +133,15 @@ export default {
       handler(newVal) {
         if (newVal) {
          // console.log("watch-endTime:" + newVal);
-          this.check1Hour(this.formData.startTime,newVal)
+          //this.check1Hour(this.formData.startTime,newVal)
         }
       }
     }
   },
   methods: {
-    Add1Hour(baseDate,dateStr) {
+    Add1Hour(dateStr) {
       let date = new Date(dateStr)
+      let year = date.getFullYear();
       let month = (date.getMonth() + 1).toString();
       let day = (date.getDate()).toString();
       let hour = date.getHours().toString();
@@ -163,23 +162,13 @@ export default {
       if (seconds<10) {
         seconds = "0" + seconds;
       }
-      let dateTime_s = baseDate + " " + hour + ":" +minutes+ ":" + seconds;
-      let dateTime_e = baseDate + " " + hour + ":59" + ":" + seconds;
-      //console.log("Add1Hour-baseDate:" + baseDate+";dateTime="+dateTime_e+";dateTime_s="+dateTime_s);
+      let dateTime = year + "-" + month + "-" + day + " " + hour + ":59" + ":" + seconds;
       this.$nextTick(() => {
-        this.$set(this.formData, "startTime", dateTime_s)
-        this.$set(this.formData, "endTime", dateTime_e)
+        this.$set(this.formData, "endTime", dateTime)
 
       })
       this.checkperiod(date.getHours());
       this.checkampm(date.getHours())
-    },
-    check1Hour(startStr,endStr) {
-      //console.log("check1Hour-startStr:" + startStr+";endStr="+endStr);
-      let startDate = new Date(startStr)
-      let endDate = new Date(endStr)
-      let startHour=startDate.getHours();
-      let endHour=endDate.getHours();
     },
     checkampm(hour){
       let timeValue = "" +((hour >= 12) ? "下午 " : "上午 " )
