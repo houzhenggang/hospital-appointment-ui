@@ -22,10 +22,20 @@ export const tableOption = {
       type: "select",
       search: true,
       dicUrl: '/admin/dict/type/kasoft_inspection_type',
+      rules: [{
+        required: true,
+        message: "不能为空",
+        trigger: 'blur'
+      }],
     },
 	  {
       label: '检查项目',
-      prop: 'inspItemName'
+      prop: 'inspItemName',
+      rules: [{
+        required: true,
+        message: "不能为空",
+        trigger: 'blur'
+      }],
     },
 	  {
       label: '检查项说明',
