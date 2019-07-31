@@ -13,7 +13,6 @@ export default {
         labelWidth: "150",
         labelPosition: "right",
         column: [
-
           {
             label: '医院名称',
             prop: 'hospitalId',
@@ -22,18 +21,28 @@ export default {
             props: {
               label: 'name',
               value: 'hospitalId'
-            }
+            },
+            rules: [{
+              required: true,
+              message: "不能为空",
+              trigger: 'blur'
+            }]
           },
           {
             label: '项目名称',
-            prop: 'inspItemName',
+            prop: 'inspItemId',
             type: 'select',
             search: true,
             dicUrl: '/base/doctorinspectionitem/dict',
             props: {
               label: 'inspItemName',
               value: 'inspItemId'
-            }
+            },
+            rules: [{
+              required: true,
+              message: "不能为空",
+              trigger: 'blur'
+            }]
           },
           {
             label: '收费单价',
@@ -41,12 +50,22 @@ export default {
             type: 'number',
             precision: 2,
             minRows: 0,
+            rules: [{
+              required: true,
+              message: "不能为空",
+              trigger: 'blur'
+            }]
           },
           {
             label: '数量',
             prop: 'quantity',
             type: 'number',
             minRows: 0,
+            rules: [{
+              required: true,
+              message: "不能为空",
+              trigger: 'blur'
+            }]
           },
           {
             label: '日期',
@@ -54,26 +73,51 @@ export default {
             type: "date",
             format: 'yyyy-MM-dd',
             valueFormat: 'yyyy-MM-dd hh:mm:ss',
+            rules: [{
+              required: true,
+              message: "不能为空",
+              trigger: 'blur'
+            }]
           },
           {
             label: '开始时间',
             prop: 'startTime',
             type: "time",
-            format: 'hh:mm',
-            valueFormat: 'yyyy-MM-dd hh:mm:ss',
+            format: 'HH:mm',
+            valueFormat: 'yyyy-MM-dd HH:mm:ss',
+            rules: [{
+              required: true,
+              message: "不能为空",
+              trigger: 'blur'
+            }]
           },
           {
             label: '结束时间',
             prop: 'endTime',
             type: "time",
-            format: 'hh:mm',
-            valueFormat: 'yyyy-MM-dd hh:mm:ss',
+            format: 'HH:mm',
+            valueFormat: 'yyyy-MM-dd HH:mm:ss',
+            rules: [{
+              required: true,
+              message: "不能为空",
+              trigger: 'blur'
+            }]
           }
         ]
       }
     }
   },
   watch: {
+    "formData.inspItemDate": {
+      deep: true,
+      immediate: true,
+      handler(newVal) {
+        if (newVal) {
+          let date = new Date(newVal)
+          this.checkWeek(date.getDay())
+        }
+      }
+    },
     "formData.startTime": {
       deep: true,
       immediate: true,
@@ -101,7 +145,7 @@ export default {
       let year = date.getFullYear();
       let month = (date.getMonth() + 1).toString();
       let day = (date.getDate()).toString();
-      let hour = (date.getHours() + 1).toString();
+      let hour = date.getHours().toString();
       let minutes = (date.getMinutes()).toString();
       let seconds = (date.getSeconds()).toString();
       if (month.length == 1) {
@@ -110,14 +154,13 @@ export default {
       if (day.length == 1) {
         day = "0" + day;
       }
-      let dateTime = year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+      let dateTime = year + "-" + month + "-" + day + " " + hour + ":59" + ":" + seconds;
       this.$nextTick(() => {
         this.$set(this.formData, "endTime", dateTime)
 
       })
       this.checkperiod(date.getHours());
       this.checkampm(date.getHours())
-      this.checkWeek(date.getDay())
     },
     check1Hour(startStr,endStr) {
       //console.log("check1Hour-startStr:" + startStr+";endStr="+endStr);

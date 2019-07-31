@@ -82,15 +82,15 @@ export const mainTableOption = {
       label: '开始时间',
       prop: 'startTime',
       type: "time",
-      format:'hh:mm',
-      valueFormat:'yyyy-MM-dd hh:mm:ss',
+      format:'HH:mm',
+      valueFormat:'yyyy-MM-dd HH:mm:ss',
     },
     {
       label: '结束时间',
       prop: 'endTime',
       type: "time",
-      format:'hh:mm',
-      valueFormat:'yyyy-MM-dd hh:mm:ss',
+      format:'HH:mm',
+      valueFormat:'yyyy-MM-dd HH:mm:ss',
       change: () => {
         console.log('值改变')
       },
@@ -111,9 +111,6 @@ export const mainTableOption = {
       type: 'datetime',
       format: 'yyyy-MM-dd HH:mm',
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
-      hide: true,
-      editDisabled: true,
-      addDisplay: false
     }
   ]
 }
