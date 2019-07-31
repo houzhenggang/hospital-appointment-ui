@@ -26,7 +26,7 @@ export default {
               required: true,
               message: "不能为空",
               trigger: 'blur'
-            }]
+            }],
           },
           {
             label: '项目名称',
@@ -72,7 +72,7 @@ export default {
             prop: 'inspItemDate',
             type: "date",
             format: 'yyyy-MM-dd',
-            valueFormat: 'yyyy-MM-dd hh:mm:ss',
+            valueFormat: 'yyyy-MM-dd HH:mm:ss',
             rules: [{
               required: true,
               message: "不能为空",
@@ -153,6 +153,9 @@ export default {
       }
       if (day.length == 1) {
         day = "0" + day;
+      }
+      if (hour<10) {
+        hour = "0" + hour;
       }
       let dateTime = year + "-" + month + "-" + day + " " + hour + ":59" + ":" + seconds;
       this.$nextTick(() => {

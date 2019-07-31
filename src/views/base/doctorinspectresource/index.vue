@@ -42,7 +42,7 @@
         getMainTableData,
         deleteInspRes,
         updateInspRes,
-        createInspRes
+        createInspRes,
     } from '@/api/base/doctorinspectresource'
     import commonMixin from "@/mixins/mixins"
     import {

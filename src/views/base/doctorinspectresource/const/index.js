@@ -50,7 +50,7 @@ export const mainTableOption = {
     },
     {
       label: '项目名称',
-      prop: 'inspItemName',
+      prop: 'inspItemId',
       type: 'select',
       dicUrl: '/base/doctorinspectionitem/dict',
       props: {

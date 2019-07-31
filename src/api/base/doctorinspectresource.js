@@ -20,6 +20,10 @@ export function createInspRes (formData) {
   return request.post(`${baseUrl}`, formData)
 }
 
+
+export function getHospitalById (id) {
+  return request.get(`/base/doctorhospital/${id}`)
+}
 export function fetchList(query) {
   return request({
     url: '/base/doctorinspectresource/page',
