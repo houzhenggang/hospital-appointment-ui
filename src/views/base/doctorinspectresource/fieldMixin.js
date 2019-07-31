@@ -134,28 +134,36 @@ export default {
       let period = "8:00~9:00"
        if(hour<=8)
        {
-         period = "8:00~9:00"
+         //period = "8:00~9:00"
+         period="1"
        }else if(hour<=9)
        {
-         period = "9:00~10:00"
+         //period = "9:00~10:00"
+         period="2"
        }else if(hour<=10)
        {
-         period = "10:00~11:00"
+         //period = "10:00~11:00"
+         period="3"
        }else if(hour<=11)
        {
-         period = "11:00~12:00"
+         //period = "11:00~12:00"
+         period="4"
        }else if(hour<=13)
        {
-         period = "13:00~14:00"
+         //period = "13:00~14:00"
+         period="5"
        }else if(hour<=14)
        {
-         period = "14:00~15:00"
+         //period = "14:00~15:00"
+         period="6"
        }else if(hour<=15)
        {
-         period = "15:00~16:00"
+         //period = "15:00~16:00"
+         period="7"
        }else if(hour<=16)
        {
-         period = "16:00~17:00"
+         //period = "16:00~17:00"
+         period="8"
        }
      // console.log("checkperiod-hour="+hour+";period:" + period);
       this.$set(this.formData, "period", period)
