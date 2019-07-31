@@ -16,7 +16,7 @@ export default {
 
           {
             label: '医院名称',
-            prop: 'hospitalName',
+            prop: 'hospitalId',
             type: "select",
             dicUrl: '/base/doctorhospital/dict',
             props: {
@@ -117,6 +117,7 @@ export default {
       })
       this.checkperiod(date.getHours());
       this.checkampm(date.getHours())
+      this.checkWeek(date.getDay())
     },
     check1Hour(startStr,endStr) {
       //console.log("check1Hour-startStr:" + startStr+";endStr="+endStr);
@@ -127,7 +128,7 @@ export default {
     },
     checkampm(hour){
       let timeValue = "" +((hour >= 12) ? "下午 " : "上午 " )
-      this.$set(this.formData, "inspltemAp", timeValue)
+      this.$set(this.formData, "inspItemAp", timeValue)
     },
     checkperiod(hour) {
       let period = "8:00~9:00"
@@ -158,6 +159,12 @@ export default {
        }
      // console.log("checkperiod-hour="+hour+";period:" + period);
       this.$set(this.formData, "period", period)
+    },
+    checkWeek(day)
+    {
+      let weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+      this.$set(this.formData, "inspItemWeek", weekday[day])
+
     }
   }
 }
