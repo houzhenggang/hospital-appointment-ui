@@ -1,3 +1,17 @@
+const validateGapTime  = (rule, value, callback) => {
+  console.log("validateGapTime:"+value)
+  let hour = value.split(' ')[1].split(':')[0]
+  console.log("hour:"+hour)
+  if((hour>=8 && hour<12)||(hour>=13&&hour<17))
+  {
+    console.log("hour-true:"+hour)
+    callback();
+  }else{
+    console.log("hour-false:"+hour)
+    callback(new Error('请输入正确时间段8～12 13～17'));
+  }
+};
+
 export default {
   data() {
     return {
@@ -73,11 +87,9 @@ export default {
             type: "date",
             format: 'yyyy-MM-dd',
             valueFormat: 'yyyy-MM-dd HH:mm:ss',
-            rules: [{
-              required: true,
-              message: "不能为空",
-              trigger: 'blur'
-            }]
+            rules: [
+              { required: true, message: '不能为空', trigger: 'change' },
+            ]
           },
           {
             label: '开始时间',
@@ -85,11 +97,10 @@ export default {
             type: "time",
             format: 'HH:mm',
             valueFormat: 'yyyy-MM-dd HH:mm:ss',
-            rules: [{
-              required: true,
-              message: "不能为空",
-              trigger: 'blur'
-            }]
+            rules: [
+              { required: true, message: '不能为空', trigger: 'change' },
+              { validator: validateGapTime, trigger: 'change' },
+            ]
           },
           {
             label: '结束时间',
@@ -97,11 +108,10 @@ export default {
             type: "time",
             format: 'HH:mm',
             valueFormat: 'yyyy-MM-dd HH:mm:ss',
-            rules: [{
-              required: true,
-              message: "不能为空",
-              trigger: 'blur'
-            }]
+            rules: [
+              { required: true, message: '不能为空', trigger: 'change' },
+              { validator: validateGapTime, trigger: 'change' },
+            ]
           }
         ]
       }
