@@ -13,7 +13,8 @@
 <script>
     import fieldMixin from "./fieldMixin"
     import {
-        getHospitalById
+        getHospitalById,
+        getinspItemById
     } from '@/api/base/doctorinspectresource'
     export default {
         name: "applyorderDialog",
@@ -65,19 +66,24 @@
                     //console.log("getHospitalById:"+data.data.name)
                     this.formData.hospitalName=data.data.name
 
-                    console.log("handleSubmit:"+JSON.stringify(this.formData))
-                    this.$refs["form"].validate(valid => {
-                        if (valid) {
-                            if (this.status === "create") {
-                                this.$emit("submit", this.formData)
+                    getinspItemById(this.formData.inspItemId).then(({data}) => {
+                        //console.log("getinspItemById:"+JSON.stringify(data.data))
+                        this.formData.inspItemName=data.data.inspItemName
+                        console.log("handleSubmit:"+JSON.stringify(this.formData))
+                        this.$refs["form"].validate(valid => {
+                            if (valid) {
+                                if (this.status === "create") {
+                                    this.$emit("submit", this.formData)
+                                } else {
+                                    this.$emit("update", this.formData)
+                                }
                             } else {
-                                this.$emit("update", this.formData)
+                                this.$message.error("请先规范填写表单后提交！")
                             }
-                        } else {
-                            this.$message.error("请先规范填写表单后提交！")
-                        }
+                        })
                     })
                 })
+
 
             }
         }

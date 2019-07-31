@@ -24,6 +24,11 @@ export function createInspRes (formData) {
 export function getHospitalById (id) {
   return request.get(`/base/doctorhospital/${id}`)
 }
+
+export function getinspItemById (inspItemId) {
+  return request.get(`/base//doctorinspectionitem/${inspItemId}`)
+}
+
 export function fetchList(query) {
   return request({
     url: '/base/doctorinspectresource/page',
