@@ -42,7 +42,11 @@ export const mainTableOption = {
       label: '医院名称',
       prop: 'hospitalName',
       type: "select",
-      dicUrl: '/admin/dict/type/kasoft_hospital',
+      dicUrl: '/base/doctorhospital/dict',
+      props: {
+        label: 'name',
+        value: 'hospitalId'
+      }
     },
     {
       label: '项目名称',
