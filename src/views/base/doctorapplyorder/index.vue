@@ -15,7 +15,7 @@
           @current-change="currentChange"
           @row-save="handleSave">
           <template slot="menuLeft">
-            <scm-button type="primary" @click="handleCreate">添加预约</scm-button>
+            <!--<scm-button type="primary" @click="handleCreate">添加预约</scm-button>-->
           </template>
           <template slot-scope="scope" slot="orderState">
             <el-tag type="success" v-if="scope.row.orderState === '10'">已预约</el-tag>
@@ -30,7 +30,7 @@
               <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleCancelOrder(scope.row)"  :disabled="true">预约取消</scm-button>
               <scm-button type="text" v-if="scope.row.orderState === '10'" @click="handleConfirmOrder(scope.row)"  :disabled="false">确认到场</scm-button>
               <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleConfirmOrder(scope.row)"  :disabled="true">确认到场</scm-button>
-              <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>
+              <!-- <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>-->
               <!--<scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>-->
             </div>
           </template>
