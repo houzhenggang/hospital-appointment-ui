@@ -19,9 +19,8 @@
           </template>
           <template slot-scope="scope" slot="orderState">
             <el-tag type="success" v-if="scope.row.orderState === '10'">已预约</el-tag>
-            <el-tag type="info" v-if="scope.row.orderState === '50'">已检测</el-tag>
+            <el-tag type="info" v-if="scope.row.orderState === '50'">已检查</el-tag>
             <el-tag type="warning" v-if="scope.row.orderState === '30'">已过期</el-tag>
-            <el-tag type="warning" v-if="scope.row.orderState === '20'">到场</el-tag>
             <el-tag type="warning" v-if="scope.row.orderState === '40'">已取消</el-tag>
           </template>
           <template slot-scope="scope" slot="menu">
@@ -30,8 +29,10 @@
               <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleCancelOrder(scope.row)"  :disabled="true">预约取消</scm-button>
               <scm-button type="text" v-if="scope.row.orderState === '10'" @click="handleConfirmOrder(scope.row)"  :disabled="false">确认到场</scm-button>
               <scm-button type="text" v-if="scope.row.orderState !== '10'" @click="handleConfirmOrder(scope.row)"  :disabled="true">确认到场</scm-button>
-              <!-- <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>-->
-              <!--<scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>-->
+              <!--
+               <scm-button type="text" @click="handleUpdate(scope.row)">编辑</scm-button>
+              <scm-button type="text" @click="handleDelete(scope.row)">删除</scm-button>
+              -->
             </div>
           </template>
         </avue-crud>
@@ -132,7 +133,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    formData.orderState = 20
+                    formData.orderState = 50
                     updateApplyOrder(formData).then(({data}) => {
                         if (data.code === 0) {
                             this.$message.success("修改成功")
