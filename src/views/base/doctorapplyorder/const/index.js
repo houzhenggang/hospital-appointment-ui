@@ -93,6 +93,16 @@ export const mainTableOption = {
       type: "select",
       dicUrl: '/admin/dict/type/kasoft_apply_status',
       slot: true
+    },
+    {
+      width: 180,
+      label: '创建时间',
+      prop: 'createTime',
+      type: 'datetime',
+      format: 'yyyy-MM-dd HH:mm',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss',
+      editDisabled: true,
+      addDisplay: false,
     }
   ]
 }
