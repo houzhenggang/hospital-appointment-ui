@@ -140,12 +140,14 @@ export default {
                 }else
                 {
                     //提示 价格管理界面添加价格
-                  this.$message.success('请到价格管理界面添加价格')
+                  this.$message.error('请到价格管理界面添加价格')
+                  this.$set(this.formData, "unitPrice", 0)
                 }
               })
             }else{
               ////提示 请选择项目
-              this.$message.success('请选择检查项目')
+              this.$message.error('请选择检查项目')
+              this.$set(this.formData, "unitPrice", 0)
             }
         }
       }
@@ -165,12 +167,14 @@ export default {
               }else
               {
                 //提示 价格管理界面添加价格
-                this.$message.success('请到价格管理界面添加价格')
+                this.$message.error('请到价格管理界面添加价格')
+                this.$set(this.formData, "unitPrice", 0)
               }
             })
           }else{
             ////提示 请选择医院
-            this.$message.success('请选择医院')
+            this.$message.error('请选择医院')
+            this.$set(this.formData, "unitPrice", 0)
           }
         }
       }

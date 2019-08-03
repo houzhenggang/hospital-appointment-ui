@@ -59,6 +59,11 @@
                 })
             },
             handleSubmit() {
+                if(this.formData.unitPrice===0)
+                {
+                    this.$message.error("请输入资源项的价格！")
+                    return
+                }
                 delete this.formData.tenantId
                 let hospitalId = this.formData.hospitalId;
                 console.log("handSubmit-inspItemDate:"+this.formData.inspItemDate)
