@@ -18,6 +18,7 @@
       <div class="login-border">
         <div class="login-main">
           <h4 class="login-title">
+            <!--
             <el-select
               v-model="active"
               class="login-select animated fadeIn"
@@ -25,6 +26,7 @@
               @change="handleCommand">
               <el-option v-for="tenant in tenantList" :key="tenant.id" :label="tenant.name" :value="tenant.id"/>
             </el-select>
+            -->
           </h4>
           <userLogin v-if="activeName==='user'"/>
           <codeLogin v-else-if="activeName==='code'"/>
