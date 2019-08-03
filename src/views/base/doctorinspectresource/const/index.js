@@ -1,14 +1,15 @@
 export const mainSearchOption = [
   {
     label: '项目名称',
-    prop: 'inspItemName',
+    prop: 'inspItemId',
     type: 'select',
     search: true,
     dicUrl: '/base/doctorinspectionitem/dict',
     props: {
       label: 'inspItemName',
       value: 'inspItemId'
-    }
+    },
+    dicData: []
   },
 ]
 

@@ -7,6 +7,17 @@ export const mainSearchOption = [
     label: '手机号',
     prop: 'peoplePhone',
   },
+  {
+    label: '检查项目',
+    prop: 'inspItemId',
+    type: 'select',
+    dicUrl: '/base/doctorinspectionitem/dict',
+    props: {
+      label: 'inspItemName',
+      value: 'inspItemId'
+    },
+    dicData: []
+  },
 ]
 
 export const mainTableOption = {
@@ -58,7 +69,7 @@ export const mainTableOption = {
       }
     }, {
       label: '预约时间',
-      children: [ {
+      children: [{
         label: '开始',
         prop: 'startTime',
         type: "datetime",
