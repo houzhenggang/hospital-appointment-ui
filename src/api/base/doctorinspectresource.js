@@ -29,6 +29,12 @@ export function getinspItemById (inspItemId) {
   return request.get(`/base//doctorinspectionitem/${inspItemId}`)
 }
 
+export function getItemPrice (params) {
+  return request.get(`/base/inspectionprice/get/price/by/hospital/and/item`, {
+    params
+  })
+}
+
 export function fetchList(query) {
   return request({
     url: '/base/doctorinspectresource/page',

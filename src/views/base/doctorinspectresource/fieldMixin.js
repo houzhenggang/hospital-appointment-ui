@@ -12,6 +12,10 @@ const validateGapTime  = (rule, value, callback) => {
   }
 };
 
+import {
+  getItemPrice,
+} from '@/api/base/doctorinspectresource'
+
 export default {
   data() {
     return {
@@ -19,6 +23,7 @@ export default {
     }
   },
   created() {
+
   },
   computed: {
     mainDialogFormOption() {
@@ -68,7 +73,8 @@ export default {
               required: true,
               message: "不能为空",
               trigger: 'blur'
-            }]
+            }],
+            disabled:true,
           },
           {
             label: '数量',
@@ -118,6 +124,57 @@ export default {
     }
   },
   watch: {
+    "formData.hospitalId": {
+      deep: true,
+      immediate: true,
+      handler(newVal) {
+
+        if (newVal) {
+            let inspItemId = this.formData.inspItemId
+            if(inspItemId)
+            {
+              getItemPrice({"hospitalId":newVal,"inspItemId":inspItemId}).then(({data}) => {
+                if(data.data)
+                {
+                  this.$set(this.formData, "unitPrice", data.data.inspPrice)
+                }else
+                {
+                    //提示 价格管理界面添加价格
+                  this.$message.success('请到价格管理界面添加价格')
+                }
+              })
+            }else{
+              ////提示 请选择项目
+              this.$message.success('请选择检查项目')
+            }
+        }
+      }
+    },
+    "formData.inspItemId": {
+      deep: true,
+      immediate: true,
+      handler(newVal) {
+        if (newVal) {
+          let hospitalId = this.formData.hospitalId
+          if(hospitalId)
+          {
+            getItemPrice({"hospitalId":hospitalId,"inspItemId":newVal}).then(({data}) => {
+              if(data.data)
+              {
+                this.$set(this.formData, "unitPrice", data.data.inspPrice)
+              }else
+              {
+                //提示 价格管理界面添加价格
+                this.$message.success('请到价格管理界面添加价格')
+              }
+            })
+          }else{
+            ////提示 请选择医院
+            this.$message.success('请选择医院')
+          }
+        }
+      }
+    },
     "formData.inspItemDate": {
       deep: true,
       immediate: true,
