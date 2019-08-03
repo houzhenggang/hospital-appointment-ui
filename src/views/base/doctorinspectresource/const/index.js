@@ -80,21 +80,10 @@ export const mainTableOption = {
       valueFormat:'yyyy-MM-dd',
     },
     {
-      label: '开始时间',
-      prop: 'startTime',
-      type: "time",
-      format:'HH:mm',
-      valueFormat:'yyyy-MM-dd HH:mm:ss',
-    },
-    {
-      label: '结束时间',
-      prop: 'endTime',
-      type: "time",
-      format:'HH:mm',
-      valueFormat:'yyyy-MM-dd HH:mm:ss',
-      change: () => {
-        console.log('值改变')
-      },
+      label: '时间段',
+      prop: 'period',
+      type: 'select',
+      dicUrl: '/admin/dict/type/kasoft_resource_period',
     },
     {
       label: '备注或说明',

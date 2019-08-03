@@ -67,6 +67,15 @@
                 delete this.formData.tenantId
                 let hospitalId = this.formData.hospitalId;
                 console.log("handSubmit-inspItemDate:"+this.formData.inspItemDate)
+                 let b_date = this.formData.inspItemDate.split(' ')[0]
+                 let s_time=this.formData.startTime.split(' ')[1]
+                 let e_time = this.formData.endTime.split(' ')[1]
+
+                this.formData.startTime=b_date+" "+s_time
+                this.formData.endTime=b_date+" "+e_time
+
+                console.log("handSubmit-startTime:"+this.formData.startTime)
+                console.log("handSubmit-endTime:"+this.formData.endTime)
 
                 getHospitalById(hospitalId).then(({data}) => {
                     //console.log("getHospitalById:"+data.data.name)

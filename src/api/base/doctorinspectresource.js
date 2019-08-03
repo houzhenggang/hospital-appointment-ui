@@ -35,6 +35,10 @@ export function getItemPrice (params) {
   })
 }
 
+export function getPeriod () {
+  return request.get(`/admin/dict/type/kasoft_resource_period`)
+}
+
 export function fetchList(query) {
   return request({
     url: '/base/doctorinspectresource/page',
