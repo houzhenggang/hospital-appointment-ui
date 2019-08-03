@@ -44,6 +44,19 @@ export const tableOption = {
       span: 24,
     },
     {
+      label: "热门项目",
+      prop: "hotFlag",
+      type: "radio",
+      dicData:[{
+        label: '非热门',
+        value: "0"
+      }, {
+        label: '热门',
+        value: "1"
+      }],
+      valueDefault: "0",
+    },
+    {
       width: 180,
       label: '创建时间',
       prop: 'createTime',

@@ -67,21 +67,13 @@ export const mainTableOption = {
         label: 'inspItemName',
         value: 'inspItemId'
       }
-    }, {
-      label: '预约时间',
-      children: [{
-        label: '开始',
-        prop: 'startTime',
-        type: "datetime",
-        format: 'yyyy-MM-dd HH:mm',
-        valueFormat: 'yyyy-MM-dd HH:mm:ss',
-      }, {
-        label: '结束',
-        prop: 'endTime',
-        type: "datetime",
-        format: 'yyyy-MM-dd HH:mm',
-        valueFormat: 'yyyy-MM-dd HH:mm:ss',
-      }]
+    },
+    {
+      label: '时间段',
+      prop: 'period',
+      type: 'select',
+      dicUrl: '/admin/dict/type/kasoft_resource_period',
+      dicData: []
     },
     {
       label: '检查费用',
