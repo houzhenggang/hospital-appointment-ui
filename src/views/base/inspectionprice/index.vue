@@ -20,7 +20,7 @@
 
 <script>
     import {fetchList, getObj, addObj, putObj, delObj} from '@/api/base/inspectionprice'
-    import {tableOption} from '@/const/crud/base/inspectionprice'
+    import {tableOption} from './const/index'
     import {mapGetters} from 'vuex'
 
     export default {
