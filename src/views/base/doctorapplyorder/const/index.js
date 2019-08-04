@@ -18,6 +18,13 @@ export const mainSearchOption = [
     },
     dicData: []
   },
+  {
+    label: '时间段',
+    prop: 'period',
+    type: 'select',
+    dicUrl: '/admin/dict/type/kasoft_resource_period',
+    dicData: []
+  },
 ]
 
 export const mainTableOption = {
