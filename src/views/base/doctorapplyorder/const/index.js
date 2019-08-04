@@ -4,10 +4,6 @@ export const mainSearchOption = [
     prop: 'peopleName',
   },
   {
-    label: '手机号',
-    prop: 'peoplePhone',
-  },
-  {
     label: '检查项目',
     prop: 'inspItemId',
     type: 'select',
@@ -19,11 +15,18 @@ export const mainSearchOption = [
     dicData: []
   },
   {
-    label: '时间段',
-    prop: 'period',
-    type: 'select',
-    dicUrl: '/admin/dict/type/kasoft_resource_period',
-    dicData: []
+    label: '开始日期',
+    prop: 'startDate',
+    type: "date",
+    format:'yyyy-MM-dd',
+    valueFormat:'yyyy-MM-dd',
+  },
+  {
+    label: '截止日期',
+    prop: 'endDate',
+    type: "date",
+    format:'yyyy-MM-dd',
+    valueFormat:'yyyy-MM-dd',
   },
 ]
 
