@@ -80,7 +80,7 @@ export default {
             prop: 'inspItemDate',
             type: "date",
             format: 'yyyy-MM-dd',
-            valueFormat: 'yyyy-MM-dd HH:mm:ss',
+            valueFormat: 'yyyy-MM-dd',
             rules: [
               { required: true, message: '不能为空', trigger: 'change' },
             ]
@@ -178,6 +178,7 @@ export default {
                 {
                   let label = data.data[i].label
                   let hour = label.split(":")[0]
+                  console.log("period-hour:"+hour)
                   this.checkampm(hour)
                 }
               }
