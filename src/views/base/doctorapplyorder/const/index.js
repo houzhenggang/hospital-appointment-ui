@@ -69,11 +69,17 @@ export const mainTableOption = {
       }
     },
     {
+      label: '日期',
+      prop: 'inspItemDate',
+      type: "date",
+      format:'yyyy-MM-dd',
+      valueFormat:'yyyy-MM-dd',
+    },
+    {
       label: '时间段',
       prop: 'period',
       type: 'select',
       dicUrl: '/admin/dict/type/kasoft_resource_period',
-      dicData: []
     },
     {
       label: '检查费用',
