@@ -111,7 +111,7 @@ export default {
     // 最多显示几个
     maxShow: {
       type: Number,
-      default: 4
+      default: 5
     },
     // label位置
     labelPosition: {

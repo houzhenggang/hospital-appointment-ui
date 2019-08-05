@@ -4,6 +4,10 @@ export const mainSearchOption = [
     prop: 'peopleName',
   },
   {
+    label: '手机号',
+    prop: 'peoplePhone',
+  },
+  {
     label: '检查项目',
     prop: 'inspItemId',
     type: 'select',
@@ -18,15 +22,15 @@ export const mainSearchOption = [
     label: '开始日期',
     prop: 'startDate',
     type: "date",
-    format:'yyyy-MM-dd',
-    valueFormat:'yyyy-MM-dd',
+    format: 'yyyy-MM-dd',
+    valueFormat: 'yyyy-MM-dd',
   },
   {
     label: '截止日期',
     prop: 'endDate',
     type: "date",
-    format:'yyyy-MM-dd',
-    valueFormat:'yyyy-MM-dd',
+    format: 'yyyy-MM-dd',
+    valueFormat: 'yyyy-MM-dd',
   },
 ]
 
@@ -82,8 +86,8 @@ export const mainTableOption = {
       label: '日期',
       prop: 'inspItemDate',
       type: "date",
-      format:'yyyy-MM-dd',
-      valueFormat:'yyyy-MM-dd',
+      format: 'yyyy-MM-dd',
+      valueFormat: 'yyyy-MM-dd',
     },
     {
       label: '时间段',
@@ -107,7 +111,7 @@ export const mainTableOption = {
       label: '创建时间',
       prop: 'createTime',
       type: 'datetime',
-      format: 'yyyy-MM-dd HH:mm',
+      format: 'yyyy-MM-dd HH:mm:ss',
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
       editDisabled: true,
       addDisplay: false,
