@@ -16,6 +16,7 @@
         getHospitalById,
         getinspItemById
     } from '@/api/base/doctorinspectresource'
+
     export default {
         name: "applyorderDialog",
         mixins: [fieldMixin],
@@ -59,35 +60,36 @@
                 })
             },
             handleSubmit() {
-                if(this.formData.unitPrice===0)
-                {
-                    this.$message.error("请输入资源项的价格！")
-                    return
-                }
-                delete this.formData.tenantId
-                let hospitalId = this.formData.hospitalId;
-                console.log("handSubmit-inspItemDate:"+this.formData.inspItemDate)
+                this.$refs["form"].validate(valid => {
+                    if (valid) {
 
-                getHospitalById(hospitalId).then(({data}) => {
-                    //console.log("getHospitalById:"+data.data.name)
-                    this.formData.hospitalName=data.data.name
-                    this.formData.hospitalPhone=data.data.phone
-                    getinspItemById(this.formData.inspItemId).then(({data}) => {
-                        //console.log("getinspItemById:"+JSON.stringify(data.data))
-                        this.formData.inspItemName=data.data.inspItemName
-                        console.log("handleSubmit:"+JSON.stringify(this.formData))
-                        this.$refs["form"].validate(valid => {
-                            if (valid) {
+                        if (this.formData.unitPrice === 0) {
+                            this.$message.error("所选医院,项目,没有录入价格")
+                            return
+                        }
+                        delete this.formData.tenantId
+                        let hospitalId = this.formData.hospitalId;
+
+                        getHospitalById(hospitalId).then(({data}) => {
+                            //console.log("getHospitalById:"+data.data.name)
+                            this.formData.hospitalName = data.data.name
+                            this.formData.hospitalPhone = data.data.phone
+                            getinspItemById(this.formData.inspItemId).then(({data}) => {
+                                //console.log("getinspItemById:"+JSON.stringify(data.data))
+                                this.formData.inspItemName = data.data.inspItemName
+                                console.log("handleSubmit:" + JSON.stringify(this.formData))
                                 if (this.status === "create") {
                                     this.$emit("submit", this.formData)
                                 } else {
                                     this.$emit("update", this.formData)
                                 }
-                            } else {
-                                this.$message.error("请先规范填写表单后提交！")
-                            }
+                            })
                         })
-                    })
+
+                    } else {
+                        this.$message.error("请先规范填写表单后提交！")
+                    }
+
                 })
 
 
