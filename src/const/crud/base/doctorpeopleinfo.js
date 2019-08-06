@@ -7,6 +7,7 @@ export const tableOption = {
   stripe: true,
   menuAlign: 'center',
   align: 'center',
+  addBtn: false,
   column: [
     {
       fixed: true,
