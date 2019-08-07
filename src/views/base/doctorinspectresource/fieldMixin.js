@@ -170,7 +170,7 @@ export default {
             if(data.data)
             {
               let i
-              for (i = 1; i < data.data.length; i++)
+              for (i = 0; i < data.data.length; i++)
               {
                 let value = data.data[i].value
                 if(value===newVal)
