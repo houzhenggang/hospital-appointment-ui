@@ -6,7 +6,10 @@
     :loading="loading"
     @close="handleClosed"
     @handleSubmit="handleSubmit">
-    <avue-form ref="form" v-model="formData" :option="mainDialogFormOption"/>
+    <el-upload :show-file-list="false" :on-change="handleChange" action="action">
+      <el-button type="primary">导入 excel</el-button>
+    </el-upload>
+    <avue-crud :option="option" :data="list"></avue-crud>
   </scm-dialog>
 </template>
 
@@ -32,12 +35,27 @@ export default {
   },
   data() {
     return {
+      list: [],
+      option: {
+        addBtn: false,
+        refreshBtn: false,
+          columnBtn: false,
+        column: [{
+          label: 'id',
+          prop: 'id'
+        }, {
+          label: '姓名',
+          prop: 'name'
+        }, {
+          label: '年龄',
+          prop: 'sex'
+        }]
+      },
       dialogStatus: {
-        create: '新增资源',
+        create: '批量导入资源',
         update: '修改资源',
         detail: '资源详细'
-      },
-      formData: {}
+      }
     }
   },
   methods: {
@@ -49,6 +67,12 @@ export default {
           this.status !== 'detail' ? this.$refs['form'].clearValidate() : ''
         })
       })
+    },
+    handleChange(file, fileLis) {
+      this.$export.xlsx(file.raw)
+        .then(data => {
+          this.list = data.results
+        })
     },
     close() {
       this.$refs['dialog'].close()
