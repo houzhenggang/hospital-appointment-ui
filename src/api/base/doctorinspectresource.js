@@ -76,3 +76,8 @@ export function putObj(obj) {
     data: obj
   })
 }
+
+// 批量导入
+export function batchImport(data) {
+  return request.post(`${baseUrl}/save/batch`, data)
+}

@@ -54,3 +54,9 @@ export function putObj(obj) {
     data: obj
   })
 }
+
+let baseUrl = '/base/doctorhospital'
+// 获取医院字典数据
+export const getHospitalDict = () => {
+  return request.get(`${baseUrl}/dict`)
+}
