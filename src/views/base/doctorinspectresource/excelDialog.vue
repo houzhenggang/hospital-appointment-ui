@@ -8,7 +8,9 @@
     @handleSubmit="handleSubmit">
     <label class="uploadExcel" for="xFile">导入 excel</label>
     <form><input input type='file' accept='.xlsx, .xls' @change="onImportExcel" id="xFile" style="position:absolute;clip:rect(0 0 0 0);"></form>
-    <avue-crud :option="option" :data="list">
+    <avue-crud :option="option" :data="list" 
+      @row-update="handleUpdate"
+      @row-del="handleDelete">
     </avue-crud>
   </scm-dialog>
 </template>
@@ -87,6 +89,7 @@ export default {
 
       var fileReader = new FileReader();
       fileReader.onload = (ev) => {
+          document.querySelector('#xFile').value = ''
           try {
               var data = ev.target.result,
               workbook = XLSX.read(data, {
@@ -183,14 +186,14 @@ export default {
       this.formData = {}
     },
     timeFilter(time) {
-      let bbb = time.split("-")
-      if (bbb[1].length === 1) {
-        bbb[1] = '0'.concat(time.split("-")[1])
+      let result = time.split("-")
+      if (result[1].length === 1) {
+        result[1] = '0'.concat(time.split("-")[1])
       }
-      if (bbb[2].length === 1) {
-        bbb[2] = '0'.concat(time.split("-")[2])
+      if (result[2].length === 1) {
+        result[2] = '0'.concat(time.split("-")[2])
       }
-      time = `${bbb[0]}-${bbb[1]}-${bbb[2]}`
+      time = `${result[0]}-${result[1]}-${result[2]}`
       return time
     },
     async handleSubmit() {
@@ -293,6 +296,18 @@ export default {
           })
         }
       }, 500)
+    },
+    handleUpdate(data, index, done, loading) {
+      if (!data.hospitalName || !data.inspItemAp || !data.inspItemDate || !data.inspItemName || !data.inspItemWeek || !data.quantity || !data.timeSlot) {
+        this.$message.error('不可为空')
+        loading()
+        return
+      }
+      this.list.splice(index, 1, data)
+      done()
+    },
+    handleDelete(data, index) {
+      this.list.splice(index, 1)
     }
   }
 }
