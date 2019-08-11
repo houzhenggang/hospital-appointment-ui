@@ -1,6 +1,7 @@
 <template>
   <scm-dialog
     ref="dialog"
+    width=80%
     :title="dialogStatus[status]"
     :is-btn-group="status !== 'detail'"
     :loading="loading"
