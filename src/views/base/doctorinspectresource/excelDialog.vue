@@ -218,14 +218,18 @@ export default {
       });
 
       let result3 = await getPeriod()
-      data.map(element => {
-        result3.data.data.forEach(item => {
-          if (element.timeSlot === item.label) {
-            element.period = item.value
-          }
-        })
-        return element
-      });
+      let promise3 = new Promise(resolve => {
+        data.map(element => {
+          result3.data.data.forEach(item => {
+            if (element.timeSlot === item.label) {
+              element.period = item.value
+            }
+          })
+          return element
+        });
+        resolve()
+      })
+      await promise3
 
       let result4
 
@@ -251,6 +255,21 @@ export default {
           element.unitPrice = result4.data.data.inspPrice
         }
       });
+
+      let onlineActor = []
+      data.map(async (element, index) => {
+      let promise = new Promise(resolve => {
+        getItemPrice({ 'hospitalId': element.hospitalId, 'inspItemId': element.inspItemId }).then(res => {
+          if (res.data.data) {
+            element.unitPrice = res.data.data.inspPrice
+          }
+        })
+        resolve()
+      })
+      onlineActor.push(promise)
+      })
+      await Promise.all(onlineActor)
+
       setTimeout(async () => {
         data.every((element, index) => {
           if (!element.unitPrice) {
