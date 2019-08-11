@@ -8,7 +8,8 @@
     @handleSubmit="handleSubmit">
     <label class="uploadExcel" for="xFile">导入 excel</label>
     <form><input input type='file' accept='.xlsx, .xls' @change="onImportExcel" id="xFile" style="position:absolute;clip:rect(0 0 0 0);"></form>
-    <avue-crud :option="option" :data="list"></avue-crud>
+    <avue-crud :option="option" :data="list">
+    </avue-crud>
   </scm-dialog>
 </template>
 
@@ -18,7 +19,8 @@ import {
   getHospitalById,
   getinspItemById,
   getItemPrice,
-  getPeriod
+  getPeriod,
+  batchImport
 } from '@/api/base/doctorinspectresource'
 import {
   getHospitalDict
@@ -74,7 +76,8 @@ export default {
         create: '批量导入资源',
         update: '修改资源',
         detail: '资源详细'
-      }
+      },
+      flag: false
     }
   },
   methods: {
@@ -154,10 +157,10 @@ export default {
               hospitalName: value[1],
               inspItemName: value[3],
               inspItemAp: value[4],
-              inspItemDate: result.getFullYear() + '-'  + beforeData[1][i].match(/（(.*)）/)[1],
+              inspItemDate: this.timeFilter(result.getFullYear() + '-'  + beforeData[1][i].match(/（(.*)）/)[1]),
               inspItemWeek: beforeData[1][i].replace(beforeData[1][i].match(/（(.*)）/)[0], '').replace(/周/, '星期'),
-              startTime: value[5],
-              endTime: value[6],
+              // startTime: value[5],
+              // endTime: value[6],
               timeSlot: `${value[5]}~${value[6]}`,
               quantity: value[i],
             })
@@ -179,6 +182,17 @@ export default {
       this.list = []
       this.formData = {}
     },
+    timeFilter(time) {
+      let bbb = time.split("-")
+      if (bbb[1].length === 1) {
+        bbb[1] = '0'.concat(time.split("-")[1])
+      }
+      if (bbb[2].length === 1) {
+        bbb[2] = '0'.concat(time.split("-")[2])
+      }
+      time = `${bbb[0]}-${bbb[1]}-${bbb[2]}`
+      return time
+    },
     async handleSubmit() {
       console.log(this.list)
       let data = deepClone(this.list)
@@ -187,12 +201,11 @@ export default {
         result1.data.data.forEach(item => {
           if (element.hospitalName === item.name) {
             element.hospitalId = item.hospitalId
+            element.hospitalPhone = item.phone
           }
         })
         return element
       });
-
-      console.log(data)
 
       let result2 = await getInspectionitemDict()
       data.map(element => {
@@ -205,7 +218,6 @@ export default {
       });
 
       let result3 = await getPeriod()
-      console.log(result3.data)
       data.map(element => {
         result3.data.data.forEach(item => {
           if (element.timeSlot === item.label) {
@@ -216,18 +228,71 @@ export default {
       });
 
       let result4
-      let result5 = await data.map(async element => {
+
+      data.every((element, index) => {
+        if (!element.hospitalId) {
+          this.flag = true
+          this.$message({
+            showClose: true,
+            message: `第${index + 1}条数据中的医院名称在系统中不存在，请先去添加对应资源`,
+            type: 'waring'
+          })
+          return false;
+        } else if (!element.inspItemId) {
+          console.log(index)
+          this.flag = true
+          this.$message({
+            showClose: true,
+            message: `第${index + 1}条数据中的资源名称在系统中不存在，请先去添加对应资源`,
+            type: 'waring'
+          })
+          return false;
+        }
+      });
+      if (this.flag) {
+        return
+      }
+
+      data.map(async (element, index) => {
         result4 = await getItemPrice({ 'hospitalId': element.hospitalId, 'inspItemId': element.inspItemId })
         if (result4.data.data) {
           element.unitPrice = result4.data.data.inspPrice
-        } else {
-          console.log('请到价格管理界面添加价格')
         }
-        return element
       });
-      console.log(data)
-
-      // hospitalPhone
+      setTimeout(async () => {
+        data.every((element, index) => {
+          if (!element.unitPrice) {
+            this.flag = true
+            this.$message({
+              showClose: true,
+              message: `第${index + 1}中对应的价格不存在，请到价格管理界面添加价格`,
+              type: 'waring'
+            })
+            return false;
+          } 
+        });
+        if (this.flag) {
+          return
+        }
+        this.handleClosed()
+        this.close()
+        this.list = data
+        let lastResult = await batchImport(data)
+        console.log(lastResult.data.data)
+        if (lastResult.data.code === 0) {
+            this.$message({
+              showClose: true,
+              message: '导入成功',
+              type: 'success'
+            })
+        } else {
+          this.$message({
+            showClose: true,
+            message: '导入失败',
+            type: 'waring'
+          })
+        }
+      }, 500)
     }
   }
 }
