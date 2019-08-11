@@ -132,6 +132,14 @@ export default {
           return item
         }
       })
+      if (beforeData.length === 0) {
+        this.$message({
+          showClose: true,
+          message: '表格格式不正确，添加失败',
+          type: 'waring'
+        })
+        return
+      }
       console.log(beforeData)
 
       var afterData = []
@@ -156,29 +164,22 @@ export default {
           }
         } 
       })
-      console.log(afterData)
       this.list = afterData
     },
     open(formData) {
       this.formData = formData
       this.$nextTick(() => {
         this.$refs['dialog'].open()
-        this.$nextTick(() => {
-          this.status !== 'detail' ? this.$refs['form'].clearValidate() : ''
-        })
       })
     },
     close() {
       this.$refs['dialog'].close()
     },
     handleClosed() {
+      this.list = []
       this.formData = {}
-      this.$nextTick(() => {
-        this.status !== 'detail' ? this.$refs['form'].resetForm() : ''
-      })
     },
     async handleSubmit() {
-      console.log('保存')
       console.log(this.list)
       let data = deepClone(this.list)
       let result1 = await getHospitalDict()
