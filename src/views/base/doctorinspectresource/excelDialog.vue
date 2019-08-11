@@ -59,7 +59,7 @@ export default {
           label: '医院名称',
           prop: 'hospitalName'
         }, {
-          label: '资源名称',
+          label: '项目名称',
           prop: 'inspItemName'
         }, {
           label: '日期',
@@ -140,11 +140,7 @@ export default {
         }
       })
       if (beforeData.length === 0) {
-        this.$message({
-          showClose: true,
-          message: '表格格式不正确，添加失败',
-          type: 'waring'
-        })
+        this.$message.error('表格格式不正确，添加失败')
         return
       }
       console.log(beforeData)
@@ -236,20 +232,12 @@ export default {
       data.every((element, index) => {
         if (!element.hospitalId) {
           this.flag = true
-          this.$message({
-            showClose: true,
-            message: `第${index + 1}条数据中的医院名称在系统中不存在，请先去添加对应资源`,
-            type: 'waring'
-          })
+          this.$message.error(`第${index + 1}条数据中的医院名称在系统中不存在，请先去添加对应资源`)
           return false;
         } else if (!element.inspItemId) {
           console.log(index)
           this.flag = true
-          this.$message({
-            showClose: true,
-            message: `第${index + 1}条数据中的资源名称在系统中不存在，请先去添加对应资源`,
-            type: 'waring'
-          })
+          this.$message.error(`第${index + 1}条数据中的项目名称在系统中不存在，请先去添加对应资源`)
           return false;
         }
       });
@@ -267,11 +255,7 @@ export default {
         data.every((element, index) => {
           if (!element.unitPrice) {
             this.flag = true
-            this.$message({
-              showClose: true,
-              message: `第${index + 1}中对应的价格不存在，请到价格管理界面添加价格`,
-              type: 'waring'
-            })
+            this.$message.error(`第${index + 1}中对应的价格不存在，请到价格管理界面添加价格`)
             return false;
           } 
         });
@@ -290,11 +274,7 @@ export default {
               type: 'success'
             })
         } else {
-          this.$message({
-            showClose: true,
-            message: '导入失败',
-            type: 'waring'
-          })
+          this.$message.error('导入失败')
         }
       }, 500)
     },
