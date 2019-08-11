@@ -16,10 +16,19 @@
 import fieldMixin from './fieldMixin'
 import {
   getHospitalById,
-  getinspItemById
+  getinspItemById,
+  getItemPrice,
+  getPeriod
 } from '@/api/base/doctorinspectresource'
+import {
+  getHospitalDict
+} from '@/api/base/doctorhospital'
+import {
+  getInspectionitemDict
+} from '@/api/base/doctorinspectionitem'
 import * as XLSX from 'xlsx'
 import Papa from 'papaparse'
+import { deepClone } from '@/util/util'
 
 export default {
   name: 'applyorderDialog',
@@ -49,19 +58,13 @@ export default {
           prop: 'inspItemName'
         }, {
           label: '日期',
-          prop: 'date'
+          prop: 'inspItemDate'
         }, {
           label: '上下午',
           prop: 'inspItemAp'
         }, {
-          label: '开始时间',
-          prop: 'startTime'
-        }, {
-          label: '截止时间',
-          prop: 'endTime'
-        }, {
           label: '时间段',
-          prop: 'period'
+          prop: 'timeSlot'
         }, {
           label: '数量',
           prop: 'quantity'
@@ -129,27 +132,31 @@ export default {
           return item
         }
       })
+      console.log(beforeData)
 
       var afterData = []
       beforeData.map((value, index) => {
         if (index < 2) {
           return
         }
+        let result = new Date()
         for (let i = 7; i < value.length; i++) {
           if (value[i] !== '') {
             afterData.push({
               hospitalName: value[1],
               inspItemName: value[3],
               inspItemAp: value[4],
-              date: beforeData[1][i],
+              inspItemDate: result.getFullYear() + '-'  + beforeData[1][i].match(/（(.*)）/)[1],
+              inspItemWeek: beforeData[1][i].replace(beforeData[1][i].match(/（(.*)）/)[0], '').replace(/周/, '星期'),
               startTime: value[5],
               endTime: value[6],
-              period: i - 7,
+              timeSlot: `${value[5]}~${value[6]}`,
               quantity: value[i],
             })
           }
         } 
       })
+      console.log(afterData)
       this.list = afterData
     },
     open(formData) {
@@ -170,9 +177,56 @@ export default {
         this.status !== 'detail' ? this.$refs['form'].resetForm() : ''
       })
     },
-    handleSubmit() {
+    async handleSubmit() {
       console.log('保存')
       console.log(this.list)
+      let data = deepClone(this.list)
+      let result1 = await getHospitalDict()
+      data.map(element => {
+        result1.data.data.forEach(item => {
+          if (element.hospitalName === item.name) {
+            element.hospitalId = item.hospitalId
+          }
+        })
+        return element
+      });
+
+      console.log(data)
+
+      let result2 = await getInspectionitemDict()
+      data.map(element => {
+        result2.data.data.forEach(item => {
+          if (element.inspItemName === item.inspItemName) {
+            element.inspItemId = item.inspItemId
+          }
+        })
+        return element
+      });
+
+      let result3 = await getPeriod()
+      console.log(result3.data)
+      data.map(element => {
+        result3.data.data.forEach(item => {
+          if (element.timeSlot === item.label) {
+            element.period = item.value
+          }
+        })
+        return element
+      });
+
+      let result4
+      let result5 = await data.map(async element => {
+        result4 = await getItemPrice({ 'hospitalId': element.hospitalId, 'inspItemId': element.inspItemId })
+        if (result4.data.data) {
+          element.unitPrice = result4.data.data.inspPrice
+        } else {
+          console.log('请到价格管理界面添加价格')
+        }
+        return element
+      });
+      console.log(data)
+
+      // hospitalPhone
     }
   }
 }
