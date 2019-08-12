@@ -164,7 +164,7 @@ export default {
       })
     },
     handleGet(){
-      window.open('')
+      window.open('demo.xls')
     }
   }
 }
