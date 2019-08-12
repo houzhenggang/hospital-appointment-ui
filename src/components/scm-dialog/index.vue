@@ -213,6 +213,7 @@ export default {
       if (documentClientHeight - otherHeight <= bodyHeight) {
         this.style = {
           height: documentClientHeight - otherHeight + 'px',
+          maxHeight: '500px',
           overflow: 'auto'
         }
       } else {

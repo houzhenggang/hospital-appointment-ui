@@ -4,15 +4,24 @@
     width=80%
     :title="dialogStatus[status]"
     :is-btn-group="status !== 'detail'"
-    :loading="loading"
+    :loading="isLoading"
     @close="handleClosed"
     @handleSubmit="handleSubmit">
     <label class="uploadExcel" for="xFile">导入 excel</label>
     <form><input input type='file' accept='.xlsx, .xls' @change="onImportExcel" id="xFile" style="position:absolute;clip:rect(0 0 0 0);"></form>
-    <avue-crud :option="option" :data="list" 
-      @row-update="handleUpdate"
-      @row-del="handleDelete">
+    <avue-crud :option="option" :data="list"
+      class="aTable">
+          <template slot-scope="scope" slot="menu">
+            <div class="table-btn-group">
+              <scm-button type="text" @click="handleUpdate(scope.row, scope.index)">编辑</scm-button>
+              <scm-button type="text" @click="handleDelete(scope.row, scope.index)">删除</scm-button>
+            </div>
+          </template>
     </avue-crud>
+      <mainDialog
+        ref="mainDialog"
+        :status="mainDialogStatus"
+        @update="handleUpdateSubmit"/>
   </scm-dialog>
 </template>
 
@@ -34,6 +43,7 @@ import {
 import * as XLSX from 'xlsx'
 import Papa from 'papaparse'
 import { deepClone } from '@/util/util'
+import mainDialog from './mainDialog1'
 
 export default {
   name: 'applyorderDialog',
@@ -48,20 +58,21 @@ export default {
       default: false
     }
   },
+  components: {
+    mainDialog
+  },
   data() {
     return {
+      index: undefined,
+      mainDialogStatus: 'detail',
       list: [],
       option: {
         addBtn: false,
+        editBtn: false,
+        delBtn: false,
         refreshBtn: false,
         columnBtn: false,
         column: [{
-          label: '价格',
-          prop: 'unitPrice'
-        }, {
-          label: '时间段1',
-          prop: 'period'
-        }, {
           label: '医院名称',
           prop: 'hospitalName'
         }, {
@@ -86,7 +97,8 @@ export default {
         update: '修改资源',
         detail: '资源详细'
       },
-      flag: false
+      flag: false,
+      isLoading: this.loading
     }
   },
   methods: {
@@ -128,7 +140,7 @@ export default {
       fileReader.readAsBinaryString(files[0]);
 
     },
-    toJson(data) {
+    async toJson(data) {
       for (let i= 1; i < data.length - 1; i++) {
         for (let j = 0; j < 7; j++) {
           if (data[i+1][j] === '') {
@@ -174,6 +186,87 @@ export default {
         } 
       })
       this.list = afterData
+
+      let nextData = deepClone(this.list)
+      let result1 = await getHospitalDict()
+      nextData.map(element => {
+        result1.data.data.forEach(item => {
+          if (element.hospitalName === item.name) {
+            element.hospitalId = item.hospitalId
+            element.hospitalPhone = item.phone
+          }
+        })
+        return element
+      });
+
+      let result2 = await getInspectionitemDict()
+      nextData.map(element => {
+        result2.data.data.forEach(item => {
+          if (element.inspItemName === item.inspItemName) {
+            element.inspItemId = item.inspItemId
+          }
+        })
+        return element
+      });
+
+      let result3 = await getPeriod()
+      nextData.map(element => {
+        result3.data.data.forEach(item => {
+          if (element.timeSlot === item.label) {
+            element.period = item.value
+          }
+        })
+        return element
+      })
+
+      this.list = nextData
+
+      let idGroup = []
+      nextData.forEach(item => {
+        if (idGroup.length === 0) {
+          idGroup.push({
+            hId: item.hospitalId,
+            iId: item.inspItemId
+          })
+        } else {
+          idGroup.forEach(ele => {
+            if (item.hospitalId === ele.hId && item.inspItemId === ele.iId) {
+              return
+            } else {
+              idGroup.push({
+                hId: item.hospitalId,
+                iId: item.inspItemId
+              })
+            }
+          })
+        }
+      })
+
+      let promise7 = []
+      idGroup.map(async (element, index) => {
+      let promise = new Promise(resolve => {        
+        getItemPrice({ 'hospitalId': element.hId, 'inspItemId': element.iId }).then(res => {
+          if (res.data.data) {
+            element.uPrice = res.data.data.inspPrice
+          }
+          resolve()
+        })
+      })
+      promise7.push(promise)
+      })
+      let res7 = await Promise.all(promise7)
+      console.log('res7:' + res7)
+
+      nextData.map(element => {
+        idGroup.forEach(item => {
+          if (element.hospitalId === item.hId && element.inspItemId === item.iId) {
+            element.unitPrice = item.uPrice
+          }
+        })
+        return element
+      })
+      this.list = nextData
+      console.log('last')
     },
     open(formData) {
       this.formData = formData
@@ -200,146 +293,82 @@ export default {
       return time
     },
     async handleSubmit() {
+      this.isLoading = true
+      this.flag = false
       console.log(this.list)
       let data = deepClone(this.list)
-      let result1 = await getHospitalDict()
-      data.map(element => {
-        result1.data.data.forEach(item => {
-          if (element.hospitalName === item.name) {
-            element.hospitalId = item.hospitalId
-            element.hospitalPhone = item.phone
-          }
-        })
-        return element
-      });
-
-      let result2 = await getInspectionitemDict()
-      data.map(element => {
-        result2.data.data.forEach(item => {
-          if (element.inspItemName === item.inspItemName) {
-            element.inspItemId = item.inspItemId
-          }
-        })
-        return element
-      });
-
-      let result3 = await getPeriod()
-      let promise3 = []
-      data.map(element => {
-        let pro3 = new Promise(resolve => {
-          result3.data.data.forEach(item => {
-            if (element.timeSlot === item.label) {
-              element.period = item.value
-            }
-            resolve()
-          })
-          return element
-        });
-        promise3.push(pro3)
-      })
-      await Promise.all(promise3)
-
       let result4
-
-      let promise4 = []
-        data.every((element, index) => {
-          let pro4 = new Promise((resolve) => {
-          if (element.hospitalId && element.inspItemId && element.period) {
-            resolve()
-          } else if (!element.hospitalId) {
-            this.flag = true
-            this.$message.error(`第${index + 1}条数据中的医院名称在系统中不存在，请先去添加对应资源`)
-            return false;
-          } else if (!element.inspItemId) {
-            console.log(index)
-            this.flag = true
-            this.$message.error(`第${index + 1}条数据中的项目名称在系统中不存在，请先去添加对应资源`)
-            return false;
-          } else if (!element.period) {
-            console.log(index)
-            this.$message.error(`第${index + 1}条数据中的时间段错误，请修改`)
-            this.flag = true
-            return false;
-          }
-        });
-        promise4.push(pro4)
-        if (this.flag) {
-          return
+      data.every((element, index) => {
+        if (!element.hospitalId) {
+          this.flag = true
+          this.$message.error(`第${index + 1}条数据中的医院名称在系统中不存在，请先去添加对应资源`)
+          this.isLoading = false
+          return false;
+        } else if (!element.inspItemId) {
+          console.log(index)
+          this.flag = true
+          this.$message.error(`第${index + 1}条数据中的项目名称在系统中不存在，请先去添加对应资源`)
+          this.isLoading = false
+          return false;
+        } else if (!element.period) {
+          console.log(index)
+          this.$message.error(`第${index + 1}条数据中的时间段错误，请修改`)
+          this.isLoading = false
+          this.flag = true
+          return false;
+        } else if (!element.unitPrice) {
+          console.log(index)
+          this.$message.error(`第${index + 1}中对应的价格不存在，请到价格管理界面添加价格`)
+          this.isLoading = false
+          this.flag = true
+          return false;
+        } else {
+          return true
         }
       })
-      await Promise.all(promise4)
 
-      let promise7 = []
-      data.map(async (element, index) => {
-      let promise = new Promise(resolve => {        
-        getItemPrice({ 'hospitalId': element.hospitalId, 'inspItemId': element.inspItemId }).then(res => {
-          if (res.data.data) {
-            element.unitPrice = res.data.data.inspPrice
-          }
-          resolve()
-        })
-      })
-      promise7.push(promise)
-      })
-      let res7 = await Promise.all(promise7)
-      console.log('res7:' + res7)
-      
-      let promise8 = await new Promise(resolve => {
-        data.every((element, index) => {
-          if (!element.unitPrice) {
-            this.flag = true
-            this.$message.error(`第${index + 1}中对应的价格不存在，请到价格管理界面添加价格`)
-            return false;
-          } 
-        });
-        if (this.flag) {
-          return
-        }
-        resolve()
-      })
-      // console.log('8')
-      // let res8 = await promise8
-      // console.log('res8:' + res8)
-      await (this.list = data)
-      // setTimeout(async () => {
-        // data.every((element, index) => {
-        //   if (!element.unitPrice) {
-        //     this.flag = true
-        //     this.$message.error(`第${index + 1}中对应的价格不存在，请到价格管理界面添加价格`)
-        //     return false;
-        //   } 
-        // });
-        // if (this.flag) {
-        //   return
-        // }
-        // this.handleClosed()
-        // this.close()
-        // await (this.list = data)
-        // let lastResult = await batchImport(data)
-        // console.log(lastResult.data.data)
-        // if (lastResult.data.code === 0) {
-        //     this.$message({
-        //       showClose: true,
-        //       message: '导入成功',
-        //       type: 'success'
-        //     })
-        // } else {
-        //   this.$message.error('导入失败')
-        // }
-      // }, 500)
-    },
-    handleUpdate(data, index, done, loading) {
-      if (!data.hospitalName || !data.inspItemAp || !data.inspItemDate || !data.inspItemName || !data.inspItemWeek || !data.quantity || !data.timeSlot) {
-        this.$message.error('不可为空')
-        loading()
-        return
+      if (this.flag) {
+        return 
       }
-      this.list.splice(index, 1, data)
-      done()
+      this.handleClosed()
+      this.close()
+      await (this.list = data)
+      let lastResult = await batchImport(data)
+      console.log(lastResult.data.data)
+      if (lastResult.data.code === 0) {
+          this.$message({
+            showClose: true,
+            message: '导入成功',
+            type: 'success'
+          })
+          this.isLoading = false
+      } else {
+        this.$message.error('导入失败')
+      }
     },
+    // handleUpdate(data, index, done, loading) {
+    //   if (!data.hospitalName || !data.inspItemAp || !data.inspItemDate || !data.inspItemName || !data.inspItemWeek || !data.quantity || !data.timeSlot) {
+    //     this.$message.error('不可为空')
+    //     loading()
+    //     return
+    //   }
+    //   this.list.splice(index, 1, data)
+    //   done()
+    // },
     handleDelete(data, index) {
       this.list.splice(index, 1)
-    }
+      this.isLoading = false
+    },
+    handleUpdate(rowData, index) {
+      this.mainDialogStatus = 'update'
+      this.$refs['mainDialog'].open(rowData)
+      this.index = index
+    },
+    handleUpdateSubmit(formData) {
+      formData.timeSlot = formData.$period
+      this.list.splice(this.index, 1, formData)
+      this.$refs['mainDialog'].close()
+    },
   }
 }
 </script>
@@ -352,6 +381,11 @@ export default {
     color: #FFF;
     background-color: #409EFF;
     border-color: #409EFF;
+ }
+ .aTable {
+   max-height: 400px;
+   overflow-y: scroll;
+   margin-top: 20px;
  }
 </style>
 
