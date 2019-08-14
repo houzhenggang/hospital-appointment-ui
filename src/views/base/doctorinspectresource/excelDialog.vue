@@ -183,7 +183,7 @@ export default {
               quantity: value[i],
             })
           }
-        } 
+        }
       })
       this.list = afterData
 
@@ -244,7 +244,7 @@ export default {
 
       let promise7 = []
       idGroup.map(async (element, index) => {
-      let promise = new Promise(resolve => {        
+      let promise = new Promise(resolve => {
         getItemPrice({ 'hospitalId': element.hId, 'inspItemId': element.iId }).then(res => {
           if (res.data.data) {
             element.uPrice = res.data.data.inspPrice
@@ -269,6 +269,7 @@ export default {
       console.log('last')
     },
     open(formData) {
+        this.isLoading = false
       this.formData = formData
       this.$nextTick(() => {
         this.$refs['dialog'].open()
@@ -328,7 +329,7 @@ export default {
       })
 
       if (this.flag) {
-        return 
+        return
       }
       this.handleClosed()
       this.close()

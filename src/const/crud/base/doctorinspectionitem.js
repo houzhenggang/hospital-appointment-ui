@@ -44,6 +44,12 @@ export const tableOption = {
       span: 24,
     },
     {
+      label: '注意禁忌症',
+      prop: 'inspItemTaboo',
+      type: 'textarea',
+      span: 24,
+    },
+    {
       label: "热门项目",
       prop: "hotFlag",
       type: "radio",
