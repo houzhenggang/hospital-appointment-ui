@@ -61,6 +61,7 @@ export const tableOption = {
       type: "number",
       minRows: 0,
       span: 12,
+      precision:2,
       row:true,
       rules: [
         { required: true, message: '不能为空', trigger: 'change' },
