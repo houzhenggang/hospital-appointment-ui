@@ -1,8 +1,11 @@
 
 import {
   getItemPrice,
-  getPeriod
+  getPeriod,
+  getinspItemById
 } from '@/api/base/doctorinspectresource'
+
+import { getDict } from "@/util/util"
 
 export default {
   data() {
@@ -127,6 +130,24 @@ export default {
       immediate: true,
       handler(newVal) {
         if (newVal) {
+
+          getinspItemById(newVal).then(({ data }) => {
+            if (data.data) {
+              //console.log("getinspItemById:"+JSON.stringify(data.data))
+              const inspItemType = data.data.inspItemType
+              const inspItems = getDict('kasoft_inspection_type')
+              let i
+              for (i = 0; i < inspItems.length; i++) {
+                const value = inspItems[i].value
+                if (value === inspItemType) {
+                  const label = inspItems[i].label
+                  this.formData.inspItemType = label
+                  break
+                }
+              }
+
+            }
+          })
           const hospitalId = this.formData.hospitalId
           if (hospitalId) {
             getItemPrice({ 'hospitalId': hospitalId, 'inspItemId': newVal }).then(({ data }) => {
