@@ -13,29 +13,14 @@ export const tableOption = {
       fixed: true,
       label: '编号',
       prop: 'peopleId',
-      span: 24,
       hide: true,
       editDisabled: true,
       addDisplay: false
     },
 	  {
-      label: '医保卡号',
-      prop: 'cardNumber'
-    },
-	  {
-      label: '慢性病',
-      prop: 'hasChronicDisease',
-      type: 'select',
-      search: true,
-      dicData: getDict('have_no')
-    },
-	  {
-      label: '慢性病内容',
-      prop: 'chronicDisease'
-    },
-	  {
       label: '身份证',
-      prop: 'idCard'
+      prop: 'idCard',
+      span: 20
     },
     // {
     //   label: '头像',
@@ -52,16 +37,8 @@ export const tableOption = {
       prop: 'name'
     },
 	  {
-      label: '昵称',
-      prop: 'nickname'
-    },
-	  {
       label: '联系电话',
       prop: 'phone'
-    },
-	  {
-      label: '固定电话',
-      prop: 'tel'
     },
 	  {
       label: '性别',
@@ -77,23 +54,11 @@ export const tableOption = {
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
       format: 'yyyy-MM-dd',
     },
-	  {
-      label: '联系人姓名',
-      prop: 'linkName'
-    },
-	  {
-      label: '联系人电话',
-      prop: 'linkPhone'
-    },
-	  {
-      label: '摘要',
-      prop: 'note'
-    },
-	  {
+    {
       label: '所属地区',
       prop: 'areaId'
     },
-	  {
+    {
       label: '关联用户编号',
       prop: 'userId'
     },
