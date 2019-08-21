@@ -1,27 +1,29 @@
 <template>
   <scm-dialog
     ref="dialog"
-    width=80%
     :title="dialogStatus[status]"
     :is-btn-group="status !== 'detail'"
     :loading="isLoading"
+    width="80%"
     @close="handleClosed"
     @handleSubmit="handleSubmit">
     <label class="uploadExcel" for="xFile">导入 excel</label>
-    <form><input input type='file' accept='.xlsx, .xls' @change="onImportExcel" id="xFile" style="position:absolute;clip:rect(0 0 0 0);"></form>
-    <avue-crud :option="option" :data="list"
+    <form><input id="xFile" input type="file" accept=".xlsx, .xls" style="position:absolute;clip:rect(0 0 0 0);" @change="onImportExcel"></form>
+    <avue-crud
+      :option="option"
+      :data="list"
       class="aTable">
-          <template slot-scope="scope" slot="menu">
-            <div class="table-btn-group">
-              <scm-button type="text" @click="handleUpdate(scope.row, scope.index)">编辑</scm-button>
-              <scm-button type="text" @click="handleDelete(scope.row, scope.index)">删除</scm-button>
-            </div>
-          </template>
+      <template slot-scope="scope" slot="menu">
+        <div class="table-btn-group">
+          <scm-button type="text" @click="handleUpdate(scope.row, scope.index)">编辑</scm-button>
+          <scm-button type="text" @click="handleDelete(scope.row, scope.index)">删除</scm-button>
+        </div>
+      </template>
     </avue-crud>
-      <mainDialog
-        ref="mainDialog"
-        :status="mainDialogStatus"
-        @update="handleUpdateSubmit"/>
+    <mainDialog
+      ref="mainDialog"
+      :status="mainDialogStatus"
+      @update="handleUpdateSubmit"/>
   </scm-dialog>
 </template>
 
@@ -47,6 +49,9 @@ import mainDialog from './mainDialog1'
 
 export default {
   name: 'applyorderDialog',
+  components: {
+    mainDialog
+  },
   mixins: [fieldMixin],
   props: {
     status: {
@@ -57,9 +62,6 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-  components: {
-    mainDialog
   },
   data() {
     return {
@@ -104,54 +106,54 @@ export default {
   methods: {
     onImportExcel(event) {
       console.log(event.target.files)
-      var files = event.target.files;
+      var files = event.target.files
 
-      var fileReader = new FileReader();
+      var fileReader = new FileReader()
       fileReader.onload = (ev) => {
-          document.querySelector('#xFile').value = ''
-          try {
-              var data = ev.target.result,
-              workbook = XLSX.read(data, {
-                  type: 'binary'
-              }), // 以二进制流方式读取得到整份excel表格对象
-              persons = []; // 存储获取到的数据
-          } catch (e) {
-              console.log('文件类型不正确');
-              return;
-          }
+        document.querySelector('#xFile').value = ''
+        try {
+          var data = ev.target.result,
+            workbook = XLSX.read(data, {
+              type: 'binary'
+            }), // 以二进制流方式读取得到整份excel表格对象
+            persons = [] // 存储获取到的数据
+        } catch (e) {
+          console.log('文件类型不正确')
+          return
+        }
 
-          // 表格的表格范围，可用于判断表头是否数量是否正确
-          var fromTo = '';
-          // 遍历每张表读取
-          for (var sheet in workbook.Sheets) {
-              if (workbook.Sheets.hasOwnProperty(sheet)) {
-                  fromTo = workbook.Sheets[sheet]['!ref'];
-                  persons = persons.concat(XLSX.utils.sheet_to_csv(workbook.Sheets[sheet]));
-                  // break; // 如果只取第一张表，就取消注释这行
-              }
+        // 表格的表格范围，可用于判断表头是否数量是否正确
+        var fromTo = ''
+        // 遍历每张表读取
+        for (var sheet in workbook.Sheets) {
+          if (workbook.Sheets.hasOwnProperty(sheet)) {
+            fromTo = workbook.Sheets[sheet]['!ref']
+            persons = persons.concat(XLSX.utils.sheet_to_csv(workbook.Sheets[sheet]))
+            // break; // 如果只取第一张表，就取消注释这行
           }
+        }
 
-          let result = persons[0].replace(/\n（/g, '（')
-          let value = Papa.parse(result)
-          this.toJson(value.data)
-      };
+        const result = persons[0].replace(/\n（/g, '（')
+        const value = Papa.parse(result)
+        this.toJson(value.data)
+      }
 
       // 以二进制方式打开文件
-      fileReader.readAsBinaryString(files[0]);
+      fileReader.readAsBinaryString(files[0])
 
     },
     async toJson(data) {
-      for (let i= 1; i < data.length - 1; i++) {
+      for (let i = 1; i < data.length - 1; i++) {
         for (let j = 0; j < 7; j++) {
-          if (data[i+1][j] === '') {
-            data[i+1][j] = data[i][j]
+          if (data[i + 1][j] === '') {
+            data[i + 1][j] = data[i][j]
           }
         }
       }
-      let beforeData = data.filter(item => {
+      const beforeData = data.filter(item => {
         let filterNum = ''
         for (let i = 7; i < item.length; i++) {
-          filterNum= filterNum.concat(item[i])
+          filterNum = filterNum.concat(item[i])
         }
         if (filterNum !== '') {
           return item
@@ -168,27 +170,27 @@ export default {
         if (index < 2) {
           return
         }
-        let result = new Date()
+        const result = new Date()
         for (let i = 7; i < value.length; i++) {
           if (value[i] !== '') {
             afterData.push({
               hospitalName: value[1],
               inspItemName: value[3],
               inspItemAp: value[4],
-              inspItemDate: this.timeFilter(result.getFullYear() + '-'  + beforeData[1][i].match(/（(.*)）/)[1]),
+              inspItemDate: this.timeFilter(result.getFullYear() + '-' + beforeData[1][i].match(/（(.*)）/)[1]),
               inspItemWeek: beforeData[1][i].replace(beforeData[1][i].match(/（(.*)）/)[0], '').replace(/周/, '星期'),
               // startTime: value[5],
               // endTime: value[6],
               timeSlot: `${value[5]}~${value[6]}`,
-              quantity: value[i],
+              quantity: value[i]
             })
           }
         }
       })
       this.list = afterData
 
-      let nextData = deepClone(this.list)
-      let result1 = await getHospitalDict()
+      const nextData = deepClone(this.list)
+      const result1 = await getHospitalDict()
       nextData.map(element => {
         result1.data.data.forEach(item => {
           if (element.hospitalName === item.name) {
@@ -197,9 +199,9 @@ export default {
           }
         })
         return element
-      });
+      })
 
-      let result2 = await getInspectionitemDict()
+      const result2 = await getInspectionitemDict()
       nextData.map(element => {
         result2.data.data.forEach(item => {
           if (element.inspItemName === item.inspItemName) {
@@ -207,9 +209,9 @@ export default {
           }
         })
         return element
-      });
+      })
 
-      let result3 = await getPeriod()
+      const result3 = await getPeriod()
       nextData.map(element => {
         result3.data.data.forEach(item => {
           if (element.timeSlot === item.label) {
@@ -221,7 +223,7 @@ export default {
 
       this.list = nextData
 
-      let idGroup = []
+      const idGroup = []
       nextData.forEach(item => {
         if (idGroup.length === 0) {
           idGroup.push({
@@ -242,19 +244,19 @@ export default {
         }
       })
 
-      let promise7 = []
-      idGroup.map(async (element, index) => {
-      let promise = new Promise(resolve => {
-        getItemPrice({ 'hospitalId': element.hId, 'inspItemId': element.iId }).then(res => {
-          if (res.data.data) {
-            element.uPrice = res.data.data.inspPrice
-          }
-          resolve()
+      const promise7 = []
+      idGroup.map(async(element, index) => {
+        const promise = new Promise(resolve => {
+          getItemPrice({ 'hospitalId': element.hId, 'inspItemId': element.iId }).then(res => {
+            if (res.data.data) {
+              element.uPrice = res.data.data.inspPrice
+            }
+            resolve()
+          })
         })
+        promise7.push(promise)
       })
-      promise7.push(promise)
-      })
-      let res7 = await Promise.all(promise7)
+      const res7 = await Promise.all(promise7)
       console.log('res7:' + res7)
 
       nextData.map(element => {
@@ -269,7 +271,7 @@ export default {
       console.log('last')
     },
     open(formData) {
-        this.isLoading = false
+      this.isLoading = false
       this.formData = formData
       this.$nextTick(() => {
         this.$refs['dialog'].open()
@@ -283,12 +285,12 @@ export default {
       this.formData = {}
     },
     timeFilter(time) {
-      let result = time.split("-")
+      const result = time.split('-')
       if (result[1].length === 1) {
-        result[1] = '0'.concat(time.split("-")[1])
+        result[1] = '0'.concat(time.split('-')[1])
       }
       if (result[2].length === 1) {
-        result[2] = '0'.concat(time.split("-")[2])
+        result[2] = '0'.concat(time.split('-')[2])
       }
       time = `${result[0]}-${result[1]}-${result[2]}`
       return time
@@ -297,32 +299,32 @@ export default {
       this.isLoading = true
       this.flag = false
       console.log(this.list)
-      let data = deepClone(this.list)
+      const data = deepClone(this.list)
       let result4
       data.every((element, index) => {
         if (!element.hospitalId) {
           this.flag = true
           this.$message.error(`第${index + 1}条数据中的医院名称在系统中不存在，请先去添加对应资源`)
           this.isLoading = false
-          return false;
+          return false
         } else if (!element.inspItemId) {
           console.log(index)
           this.flag = true
           this.$message.error(`第${index + 1}条数据中的项目名称在系统中不存在，请先去添加对应资源`)
           this.isLoading = false
-          return false;
+          return false
         } else if (!element.period) {
           console.log(index)
           this.$message.error(`第${index + 1}条数据中的时间段错误，请修改`)
           this.isLoading = false
           this.flag = true
-          return false;
+          return false
         } else if (!element.unitPrice) {
           console.log(index)
           this.$message.error(`第${index + 1}中对应的价格不存在，请到价格管理界面添加价格`)
           this.isLoading = false
           this.flag = true
-          return false;
+          return false
         } else {
           return true
         }
@@ -334,15 +336,16 @@ export default {
       this.handleClosed()
       this.close()
       await (this.list = data)
-      let lastResult = await batchImport(data)
+      const lastResult = await batchImport(data)
       console.log(lastResult.data.data)
       if (lastResult.data.code === 0) {
-          this.$message({
-            showClose: true,
-            message: '导入成功',
-            type: 'success'
-          })
-          this.isLoading = false
+        this.$message({
+          showClose: true,
+          message: '导入成功',
+          type: 'success'
+        })
+        this.isLoading = false
+        this.$emit('export')
       } else {
         this.$message.error('导入失败')
       }
@@ -369,7 +372,7 @@ export default {
       formData.timeSlot = formData.$period
       this.list.splice(this.index, 1, formData)
       this.$refs['mainDialog'].close()
-    },
+    }
   }
 }
 </script>

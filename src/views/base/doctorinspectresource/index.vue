@@ -41,8 +41,7 @@
         ref="excelDialog"
         :loading="mainDialogLoading"
         :status="mainDialogStatus"
-        @submit="handleCreateSubmit"
-        @update="handleUpdateSubmit"/>
+        @export="handleExport"/>
 
     </basic-container>
   </div>
@@ -214,6 +213,9 @@ export default {
         }
         this.mainDialogLoading = false
       })
+    },
+    handleExport() {
+      this.getList()
     },
     handleGet() {
       window.open('demo.xls')
