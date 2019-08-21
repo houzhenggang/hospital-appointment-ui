@@ -134,8 +134,10 @@ export default {
           getinspItemById(newVal).then(({ data }) => {
             if (data.data) {
               //console.log("getinspItemById:"+JSON.stringify(data.data))
+              this.formData.inspItemExp = data.data.inspItemExp
               const inspItemType = data.data.inspItemType
               const inspItems = getDict('kasoft_inspection_type')
+              //console.log("inspItems:"+JSON.stringify(inspItems))
               let i
               for (i = 0; i < inspItems.length; i++) {
                 const value = inspItems[i].value
