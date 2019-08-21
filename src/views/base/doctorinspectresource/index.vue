@@ -13,6 +13,7 @@
           :page="pagination"
           @size-change="sizeChange"
           @current-change="currentChange"
+          @refresh-change="refreshChange"
           @row-save="handleSave">
           <template slot="menuLeft">
             <scm-button type="primary" @click="handleCreate">添加</scm-button>
@@ -101,7 +102,7 @@ export default {
         '周四(8-15)': '',
         '周五(8-16)': '',
         '周六(8-17)': '',
-        '周日(8-18)': '',
+        '周日(8-18)': ''
       },
       {
         '医院名称': '南京市浦口区中心医院',
@@ -123,7 +124,7 @@ export default {
         '周四(8-15)': '',
         '周五(8-16)': '',
         '周六(8-17)': '',
-        '周日(8-18)': '',
+        '周日(8-18)': ''
       }
       ]
 
@@ -145,6 +146,9 @@ export default {
     batchCreate() {
       this.mainDialogStatus = 'create'
       this.$refs['excelDialog'].open({})
+    },
+    refreshChange() {
+      this.getList(this.page)
     },
     handleDelete(rowData) {
       this.$confirm(`是否删除预约：${rowData.inspResourceId}`, '提示', {
