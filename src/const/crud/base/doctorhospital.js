@@ -22,59 +22,82 @@ export const tableOption = {
   stripe: true,
   menuAlign: 'center',
   align: 'center',
+  menuWidth: "160",
   column: [
     {
       fixed: true,
       label: '编号',
       prop: 'hospitalId',
-      span: 24,
       hide: true,
       editDisabled: true,
       addDisplay: false
     },
-	  {
-      label: '机构名称',
-      prop: 'name'
+    {
+      label: '医疗机构名称',
+      prop: 'name',
+      span: 22,
+      row: true,
+      rules: [{
+        required: true,
+        message: '请输入医疗机构名称',
+        trigger: 'blur',
+      }]
     },
-	  {
+    {
       label: '医院图片',
-      prop: 'hospitalImage'
+      width: "90",
+      action: "/admin/file/uploadNew",
+      prop: 'hospitalImage',
+      type: 'upload',
+      row: true,
+      props: {
+        value: 'hospitalImage',
+        label: 'hospitalImage'
+      },
+      propsHttp: {
+        url: 'path',
+        name: 'fileName'
+      },
+      imgWidth: 100,
+      listType: 'picture-img'
     },
-	  {
-      label: '机构等级',
-      prop: 'hospitalLevel'
+    {
+      label: '医院等级',
+      prop: 'hospitalLevel',
+      type: 'select',
+      span: 10,
+      row: true,
+      dicUrl: '/admin/dict/type/HOSPITALLEVEL'
     },
-	  {
+    {
       label: '介绍',
-      prop: 'introduced'
+      prop: 'introduced',
+      type: 'textarea',
+      span: 10,
+      overHidden: true,
+      hide: true,
+      row: true,
+      rules:
+        [{
+          max: 20000,
+          message: '介绍信息不得超过20000',
+          trigger: 'blur'
+        }]
     },
 	  {
       label: '地址',
+      row: true,
       prop: 'address'
     },
 	  {
-      label: '总机电话',
-      prop: 'phone'
-    },
-	  {
-      label: '机构联系人',
-      prop: 'contactName'
-    },
-	  {
-      label: '联系人电话',
-      prop: 'contactPhone'
-    },
-	  {
       label: '所属地区',
+      row: true,
       prop: 'areaId'
     },
 	  {
       label: '服务电话',
+      row: true,
       prop: 'hospitalTel'
-    },
-	  {
-      label: '所属组织',
-      prop: 'deptId'
     },
     {
       width: 180,
@@ -85,7 +108,6 @@ export const tableOption = {
       valueFormat: 'yyyy-MM-dd HH:mm:ss',
       editDisabled: true,
       addDisplay: false,
-      span: 24
     }
   ]
 }
