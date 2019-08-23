@@ -46,7 +46,7 @@ export const tableOption = {
     {
       label: '医院图片',
       width: "90",
-      action: "/admin/file/uploadNew",
+      action: "/admin/sys-file/upload",
       prop: 'hospitalImage',
       type: 'upload',
       row: true,
