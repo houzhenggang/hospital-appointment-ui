@@ -74,6 +74,7 @@ export default {
             //console.log("getHospitalById:"+data.data.name)
             this.formData.hospitalName = data.data.name
             this.formData.hospitalPhone = data.data.phone
+            this.formData.hospitalImage = data.data.hospitalImage
             getinspItemById(this.formData.inspItemId).then(({ data }) => {
               //console.log("getinspItemById:"+JSON.stringify(data.data))
               this.formData.inspItemName = data.data.inspItemName
