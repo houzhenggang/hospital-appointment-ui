@@ -55,7 +55,8 @@ export const tableOption = {
         label: 'hospitalImage'
       },
       propsHttp: {
-        url: 'path',
+        res: 'data',
+        url: 'url',
         name: 'fileName'
       },
       imgWidth: 100,
