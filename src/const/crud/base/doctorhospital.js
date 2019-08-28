@@ -93,7 +93,12 @@ export const tableOption = {
 	  {
       label: '所属地区',
       row: true,
-      prop: 'areaId'
+      prop: 'areaId',
+      rules: [{
+        required: true,
+        message: '请选择类型',
+        trigger: 'blur'
+      }]
     },
 	  {
       label: '服务电话',
