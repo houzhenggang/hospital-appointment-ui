@@ -1,5 +1,15 @@
 export const mainSearchOption = [
   {
+    label: '医院名称',
+    prop: 'hospitalId',
+    type: "select",
+    dicUrl: '/base/doctorhospital/dict',
+    props: {
+      label: 'name',
+      value: 'hospitalId'
+    }
+  },
+  {
     label: '项目名称',
     prop: 'inspItemId',
     type: 'select',

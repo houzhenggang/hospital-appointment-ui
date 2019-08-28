@@ -18,7 +18,7 @@
           <template slot="menuLeft">
             <!--scm-button type="primary" @click="handleCreate">添加</scm-button-->
             <scm-button type="primary" @click="batchCreate">批量导入</scm-button>
-            <!--scm-button type="primary" @click="handleGet" >下载模版</scm-button-->
+            <scm-button type="primary" @click="handleGet" >下载模版</scm-button>
             <!--scm-button type="primary" @click="downloadMater" >下载模版2</scm-button-->
           </template>
 
