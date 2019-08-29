@@ -180,7 +180,7 @@ export default {
               inspItemDate: this.timeFilter(result.getFullYear() + '-' + beforeData[1][i].match(/（(.*)）/)[1]),
               inspItemWeek: beforeData[1][i].replace(beforeData[1][i].match(/（(.*)）/)[0], '').replace(/周/, '星期'),
               // startTime: value[5],
-              // endTime: value[6],
+              endTime: this.timeFilter(result.getFullYear() + '-' + beforeData[1][i].match(/（(.*)）/)[1]) + ' ' + value[6] + ':00',
               timeSlot: `${value[5]}~${value[6]}`,
               quantity: value[i]
             })
