@@ -5,7 +5,7 @@ import { deepClone, encryption } from '@/util/util'
 import webiste from '@/const/website'
 import { GetMenu } from '@/api/admin/menu'
 import { getDictAll as getAdminDictAll } from "@/api/admin/dict"
-
+import { getObj,getDetails } from '@/api/admin/user'
 
 function addPath(ele, first) {
   const menu = webiste.menu
@@ -62,12 +62,28 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(user.username, user.password, user.code, user.randomStr).then(response => {
           const data = response.data
+          getObj(data.user_id).then(response => {
+            console.log('getObj:' + JSON.stringify(response.data))
+            //console.log("getObj:"+JSON.stringify(response.data.data.roleList[0].roleId))
+            if (response.data.data.roleList[0].roleId === 8) {
+              commit('SET_ACCESS_TOKEN', '')
+              commit('SET_REFRESH_TOKEN', '')
+              commit('SET_EXPIRES_IN', '')
+              commit('SET_ROLES', [])
+              commit('DEL_ALL_TAG')
+              commit('CLEAR_LOCK')
+              reject(new Error('注册用户无法登录系统'))
+            } else {
+              resolve()
+            }
+          })
           commit('SET_ACCESS_TOKEN', data.access_token)
           commit('SET_REFRESH_TOKEN', data.refresh_token)
           commit('SET_EXPIRES_IN', data.expires_in)
           commit('CLEAR_LOCK')
-          resolve()
+
         }).catch(error => {
+          console.log('error:'+error)
           reject(error)
         })
       })
