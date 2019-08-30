@@ -60,7 +60,9 @@ export const tableOption = {
     },
     {
       label: '关联用户编号',
-      prop: 'userId'
+      prop: 'userId',
+      editDisabled: true,
+      addDisplay: false,
     },
     {
       width: 180,
