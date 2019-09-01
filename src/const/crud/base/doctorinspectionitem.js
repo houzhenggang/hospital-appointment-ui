@@ -42,7 +42,7 @@ export const tableOption = {
       label: '检查项说明',
       prop: 'inspItemExp',
       type: 'textarea',
-      span: 24,
+      span: 34,
     },
     {
       label: '注意禁忌症',

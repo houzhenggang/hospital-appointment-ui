@@ -1,5 +1,15 @@
 import { getDict } from "@/util/util"
 
+var DIC = {
+  StreetType: [{
+    label: '街道',
+    value: '1'
+  }, {
+    label: '居委会',
+    value: '2'
+  }]
+}
+
 export const tableOption = {
   border: true,
   index: true,
@@ -8,17 +18,13 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   menuType: "text",
-  props: {
-    label: 'label',
-    value: 'value'
-  },
   column: [
     {
       label: '类型',
       prop: 'streetType',
       type: 'select',
       search: true,
-      dicData: getDict('street_type'),
+      dicData:  DIC.StreetType,
       rules: [{
         required: true,
         message: '请选择类型',

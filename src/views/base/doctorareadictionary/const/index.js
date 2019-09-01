@@ -1,5 +1,16 @@
 import { getDict } from "@/util/util"
-
+var DIC = {
+  AreaType: [{
+    label: '省',
+    value: '1'
+  }, {
+    label: '市',
+    value: '2'
+  }, {
+    label: '区',
+    value: '3'
+  }]
+}
 export const tableOption = {
   border: true,
   index: true,
@@ -8,22 +19,18 @@ export const tableOption = {
   menuAlign: 'center',
   align: 'center',
   menuType: "text",
-  props: {
-    label: 'label',
-    value: 'value'
-  },
   column: [
     {
       label: '类型',
       prop: 'areaType',
       type: 'select',
-      dicData: getDict('area_type'),
+      dicData: DIC.AreaType,
       search: true,
       rules: [{
         required: true,
         message: '请选择类型',
         trigger: 'blur'
-      }]
+      }],
     },
 	  {
       label: '编号',
