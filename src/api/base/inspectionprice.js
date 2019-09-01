@@ -7,6 +7,14 @@ export function fetchList(query) {
     params: query
   })
 }
+export function fetchListS(query) {
+  return request({
+    url: '/base/inspectionprice/get/price/left/item/list/page',
+    method: 'get',
+    params: query
+  })
+}
+
 
 export function addObj(obj) {
   return request({

@@ -39,6 +39,16 @@ export const tableOption = {
         { required: true, message: '不能为空', trigger: 'change' },
       ]
     },
+    {
+      label: '检查类别',
+      prop: 'inspItemType',
+      type: "select",
+      search: true,
+      addDisplay:false,
+      editDisplay:false,
+      hide:true,
+      dicUrl: '/admin/dict/type/kasoft_inspection_type',
+    },
 	  {
       label: '项目名称',
       prop: 'inspItemId',

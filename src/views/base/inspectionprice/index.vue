@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import {fetchList, getObj, addObj, putObj, delObj} from '@/api/base/inspectionprice'
+    import {fetchList,fetchListS, getObj, addObj, putObj, delObj} from '@/api/base/inspectionprice'
     import {tableOption} from './const/index'
     import {mapGetters} from 'vuex'
 
@@ -51,7 +51,7 @@
         methods: {
             getList(page, params) {
                 this.tableLoading = true
-                fetchList(Object.assign({
+                fetchListS(Object.assign({
                     current: page.currentPage,
                     size: page.pageSize
                 }, params, this.searchForm )).then(response => {
