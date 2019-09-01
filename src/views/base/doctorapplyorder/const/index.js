@@ -19,6 +19,13 @@ export const mainSearchOption = [
     dicData: []
   },
   {
+    label: '订单状态',
+    prop: 'orderState',
+    type: "select",
+    dicUrl: '/admin/dict/type/kasoft_apply_status',
+    slot: true
+  },
+  {
     label: '开始日期',
     prop: 'startDate',
     type: "date",
