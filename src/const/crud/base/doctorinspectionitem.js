@@ -31,6 +31,7 @@ export const tableOption = {
 	  {
       label: '检查项目',
       prop: 'inspItemName',
+      search: true,
       rules: [{
         required: true,
         message: "不能为空",
