@@ -10,6 +10,13 @@ export const mainSearchOption = [
     }
   },
   {
+    label: '检查类别',
+    prop: 'inspItemType',
+    type: "select",
+    search: true,
+    dicUrl: '/admin/dict/type/kasoft_inspection_type',
+  },
+  {
     label: '项目名称',
     prop: 'inspItemId',
     type: 'select',
