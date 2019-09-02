@@ -1,3 +1,19 @@
+var DIC = {
+  StatusType: [{
+    label: '已预约',
+    value: '10'
+  }, {
+    label: '已检查',
+    value: '50'
+  }, {
+    label: '已过期',
+    value: '30'
+  }, {
+    label: '已取消',
+    value: '40'
+  }]
+}
+
 export const mainSearchOption = [
   {
     label: '用户姓名',
@@ -22,8 +38,7 @@ export const mainSearchOption = [
     label: '订单状态',
     prop: 'orderState',
     type: "select",
-    dicUrl: '/admin/dict/type/kasoft_apply_status',
-    slot: true
+    dicData:  DIC.StatusType,
   },
   {
     label: '开始日期',
