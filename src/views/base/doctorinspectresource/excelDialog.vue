@@ -175,7 +175,7 @@ export default {
               const result = new Date()
               for (let i = 7; i < value.length; i++) {
                   if (value[i] !== '') {
-                      let date = beforeData[1][i].split("AAAA")[0].replace(/\//g,'-')
+                      let date = beforeData[1][i].toUpperCase().split("AAAA")[0].replace(/\//g,'-')
                       date=dateFormatNew(date,'yyyy-MM-dd')
                       // console.log('hospitalName:' + value[1])
                       // console.log('inspItemName:' + value[2])
