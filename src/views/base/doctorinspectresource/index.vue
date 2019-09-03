@@ -150,7 +150,7 @@ export default {
       this.getList(this.page)
     },
     handleDelete(rowData) {
-      this.$confirm(`是否删除预约：${rowData.inspResourceId}`, '提示', {
+      this.$confirm(`是否删除资源：${rowData.inspResourceId}`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

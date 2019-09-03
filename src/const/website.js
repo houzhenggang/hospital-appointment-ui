@@ -1,6 +1,6 @@
 export default {
-  title: 'PigX',
-  logo: 'PigX',
+  title: '',
+  logo: '',
   key: 'pigx', // 配置主键,目前用于存储
   indexTitle: '互联网+医疗资源共享服务平台',
   whiteList: ['/login', '/404', '/401', '/lock'], // 配置无权限可以访问的页面
