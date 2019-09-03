@@ -193,6 +193,8 @@ export default {
                   const hour = label.split(':')[0]
                   console.log('period-hour:' + hour)
                   this.checkampm(hour)
+                  const endtime =  label.split('~')[1]
+                  this.endtimeinfo(endtime)
                 }
               }
             }
@@ -205,6 +207,11 @@ export default {
     checkampm(hour) {
       const timeValue = '' + ((hour >= 12) ? '下午 ' : '上午 ')
       this.$set(this.formData, 'inspItemAp', timeValue)
+    },
+    endtimeinfo(endtime) {
+      console.log('period-endtime:' + endtime)
+      console.log('period-endtime:' + this.formData.inspItemDate)
+      this.$set(this.formData, 'endTime', this.formData.inspItemDate+" "+endtime+":00")
     },
     checkWeek(day) {
       const weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
