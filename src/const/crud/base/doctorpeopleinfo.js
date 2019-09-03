@@ -20,6 +20,7 @@ export const tableOption = {
 	  {
       label: '身份证',
       prop: 'idCard',
+      search: true,
       span: 20
     },
     // {
@@ -34,10 +35,12 @@ export const tableOption = {
     // },
 	  {
       label: '姓名',
+      search: true,
       prop: 'name'
     },
 	  {
       label: '联系电话',
+      search: true,
       prop: 'phone'
     },
 	  {
