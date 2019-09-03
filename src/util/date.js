@@ -52,3 +52,67 @@ export function dateFormat(date) {
   }
   return ''
 }
+
+export function getDateWeek(date) {
+  var todayDate = new Date(date);
+  var date = todayDate.getDate();
+  var month = todayDate.getMonth() + 1;
+  var year = todayDate.getYear();
+  var dateweek = "";
+  switch (todayDate.getDay()) {
+    case 0:
+      dateweek += "星期日";
+      break;
+    case 1:
+      dateweek += "星期一";
+      break;
+    case 2:
+      dateweek += "星期二";
+      break;
+    case 3:
+      dateweek += "星期三";
+      break;
+    case 4:
+      dateweek += "星期四";
+      break;
+    case 5:
+      dateweek += "星期五";
+      break;
+    case 6:
+      dateweek += "星期六";
+      break;
+  }
+  return dateweek;
+}
+
+
+Date.prototype.format = function(fmt) {
+  var o = {
+    "M+" : this.getMonth()+1,                 //月份
+    "d+" : this.getDate(),                    //日
+    "h+" : this.getHours(),                   //小时
+    "m+" : this.getMinutes(),                 //分
+    "s+" : this.getSeconds(),                 //秒
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度
+    "S"  : this.getMilliseconds()             //毫秒
+  };
+  if(/(y+)/.test(fmt)) {
+    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+  }
+  for(var k in o) {
+    if(new RegExp("("+ k +")").test(fmt)){
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+    }
+  }
+  return fmt;
+}
+
+/**
+ * 日期格式化
+ */
+export function dateFormatNew(date,format) {
+  var todayDate = new Date(date);
+
+  var result = todayDate.format(format);
+  return result;
+}
