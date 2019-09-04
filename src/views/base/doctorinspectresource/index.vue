@@ -218,7 +218,7 @@ export default {
       this.getList()
     },
     handleGet() {
-      window.open('zhyl20190903.xls')
+      window.open('zhyl20190904.xls')
     },
     downloadMater() {
       const defaultCellStyle = { font: { name: 'Verdana', sz: 11, color: 'FF00FF88' }, fill: { fgColor: { rgb: 'FFFFAA00' }}}
