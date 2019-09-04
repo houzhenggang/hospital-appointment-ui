@@ -173,7 +173,7 @@ export default {
                   return
               }
               const result = new Date()
-              for (let i = 7; i < value.length; i++) {
+              for (let i = 6; i < value.length; i++) {
                   if (value[i] !== '') {
                       let date = beforeData[1][i].toUpperCase().split("AAAA")[0].replace(/\//g,'-')
                       date=dateFormatNew(date,'yyyy-MM-dd')
