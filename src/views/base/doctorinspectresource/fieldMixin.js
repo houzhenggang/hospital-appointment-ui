@@ -28,6 +28,7 @@ export default {
             prop: 'hospitalId',
             type: 'select',
             dicUrl: '/base/doctorhospital/dict',
+            disabled: true,
             props: {
               label: 'name',
               value: 'hospitalId'
@@ -43,6 +44,7 @@ export default {
             prop: 'inspItemId',
             type: 'select',
             search: true,
+            disabled: true,
             dicUrl: '/base/doctorinspectionitem/dict',
             props: {
               label: 'inspItemName',
@@ -84,6 +86,7 @@ export default {
             type: 'date',
             format: 'yyyy-MM-dd',
             valueFormat: 'yyyy-MM-dd',
+            disabled: true,
             rules: [
               { required: true, message: '不能为空', trigger: 'change' }
             ]
@@ -92,6 +95,7 @@ export default {
             label: '时间段',
             prop: 'period',
             type: 'select',
+            disabled: true,
             dicUrl: '/admin/dict/type/kasoft_resource_period',
             rules: [
               { required: true, message: '不能为空', trigger: 'change' }
