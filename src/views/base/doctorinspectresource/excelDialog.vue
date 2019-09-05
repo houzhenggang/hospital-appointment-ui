@@ -146,7 +146,7 @@ export default {
       },
       async toJson(data) {
           for (let i = 1; i < data.length - 1; i++) {
-              for (let j = 0; j < 7; j++) {
+              for (let j = 0; j < 6; j++) {
                   if (data[i + 1][j] === '') {
                       data[i + 1][j] = data[i][j]
                   }
@@ -154,7 +154,7 @@ export default {
           }
           const beforeData = data.filter(item => {
               let filterNum = ''
-              for (let i = 7; i < item.length; i++) {
+              for (let i = 6; i < item.length; i++) {
                   filterNum = filterNum.concat(item[i])
               }
               if (filterNum !== '') {
@@ -173,7 +173,7 @@ export default {
                   return
               }
               const result = new Date()
-              for (let i = 7; i < value.length; i++) {
+              for (let i = 6; i < value.length; i++) {
                   if (value[i] !== '') {
                       let date = beforeData[1][i].toUpperCase().split("AAAA")[0].replace(/\//g,'-')
                       date=dateFormatNew(date,'yyyy-MM-dd')
