@@ -107,7 +107,8 @@ export default {
   },
   methods: {
       onImportExcel(event) {
-          console.log(event.target.files)
+          this.isLoading = true
+          //console.log(event.target.files)
           var files = event.target.files
 
           var fileReader = new FileReader()
@@ -263,8 +264,11 @@ export default {
                           element.uPrice = res.data.data.inspPrice
                       }
                       resolve()
+                  }).catch(res=>{
+                      this.$message.error("检查项目不存在！")
                   })
               })
+
               promise7.push(promise)
           })
           const res7 = await Promise.all(promise7)
@@ -280,18 +284,20 @@ export default {
           })
           this.list = nextData
           console.log('last')
+          this.isLoading = false
       },
       open(formData) {
-          this.isLoading = false
           this.formData = formData
           this.$nextTick(() => {
               this.$refs['dialog'].open()
           })
       },
       close() {
+          this.isLoading = false
           this.$refs['dialog'].close()
       },
       handleClosed() {
+          this.isLoading = false
           this.list = []
           this.formData = {}
       },
