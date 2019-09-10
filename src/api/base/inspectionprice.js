@@ -45,3 +45,9 @@ export function putObj(obj) {
     data: obj
   })
 }
+
+let baseUrl = '/base/inspectionprice'
+// 获取医院字典数据
+export const getPriceDict = () => {
+  return request.get(`${baseUrl}/dict`)
+}
