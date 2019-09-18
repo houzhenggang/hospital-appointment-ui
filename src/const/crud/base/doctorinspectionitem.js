@@ -43,12 +43,18 @@ export const tableOption = {
       prop: 'inspItemExp',
       type: 'textarea',
       span: 34,
+      maxlength:1000,
+      showWordLimit:true,
+      hide: true
     },
     {
       label: '注意禁忌症',
       prop: 'inspItemTaboo',
       type: 'textarea',
       span: 24,
+      maxlength:1000,
+      showWordLimit:true,
+      hide: true
     },
     {
       label: "热门项目",
