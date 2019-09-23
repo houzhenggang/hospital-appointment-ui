@@ -88,6 +88,7 @@
                         type: 'success'
                     })
                     done()
+                    this.$set(this.page,"current",1)
                     this.getList(this.page)
                 }).catch(() => {
                     loading();
